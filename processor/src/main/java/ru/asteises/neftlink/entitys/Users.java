@@ -3,33 +3,30 @@ package ru.asteises.neftlink.entitys;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "users")
-public class User implements Serializable {
+public class Users {
 
-    @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    // ИНН организации и есть уникальный идентификатор, возможно стоит его и установить как id ?
     @Column(name = "inn", unique = true, nullable = false)
     private Integer inn;
 
@@ -58,7 +55,8 @@ public class User implements Serializable {
 
     Связь в БД между таблицами users и orders осуществляется посредством поля orderId в таблице users.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Set<Order> orderList;
+
 }

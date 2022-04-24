@@ -27,10 +27,6 @@ public class Base implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     @Column(name = "name", nullable = false)
     private String name;
 

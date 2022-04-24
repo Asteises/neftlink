@@ -11,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -40,8 +42,9 @@ public class Order implements Serializable {
     Для того, чтобы объявить сторону, которая не несет ответственности за отношения, используется атрибут mappedBy
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
-    @OneToOne(mappedBy = "order")
-    private User userOwner;
+    //TODO посмотреть как делать ManyToOne
+    @ManyToOne()
+    private Users usersOwner;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gas_id", nullable = false)
@@ -52,8 +55,8 @@ public class Order implements Serializable {
 
     // Тут нужно выбрать подходящий класс
     @Column(name = "update_date")
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     @Column(name = "create_date", nullable = false)
-    private Date createDate;
+    private LocalDateTime createDate;
 }
