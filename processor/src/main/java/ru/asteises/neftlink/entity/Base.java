@@ -1,4 +1,4 @@
-package ru.asteises.neftlink.entitys;
+package ru.asteises.neftlink.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +16,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "gas")
-public class Gas implements Serializable {
+@Table(name = "base")
+public class Base implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "gas_type", nullable = false)
-    private String gasType;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "address")
+    private String address;
 }

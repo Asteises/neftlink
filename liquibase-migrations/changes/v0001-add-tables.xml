@@ -4,6 +4,85 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<changeSet id="v0001-add-tables.xml" author="asteises">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="base"/>
+            <tableExists tableName="gas"/>
+            <tableExists tableName="order"/>
+            <tableExists tableName="role"/>
+            <tableExists tableName="users"/>
+            <tableExists tableName="user_roles"/>
+        </not>
+    </preConditions>
+
+    <createTable tableName="base">
+    <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+    </column>
+        <column name ="name" type="VARCHAR(100)"/>
+        <column name ="address" type="VARCHAR(200)"/>
+    </createTable>
+
+    <createTable tableName="gas">
+        <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name ="gas_type" type="VARCHAR(100)"/>
+    </createTable>
+
+    <createTable tableName="order">
+        <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="create_date" type="TIMESTAMP"/>
+        <column name="update_date" type="TIMESTAMP"/>
+        <column name="gas_id" type="BIGINT"/>
+        <column name="base_id" type="BIGINT"/>
+     </createTable>
+
+    <createTable tableName="users">
+        <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="name" type="VARCHAR(50)"/>
+        <column name="email" type="VARCHAR(50)"/>
+        <column name="company" type="VARCHAR(100)"/>
+        <column name="order_id" type="BIGINT"/>
+    </createTable>
+
+    <createTable tableName="role">
+        <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name ="role_name" type="VARCHAR(15)"/>
+    </createTable>
+
+    <createTable tableName="users_roles">
+        <column name="user_id" type="BIGINT"/>
+        <column name ="role_id" type="BIGINT"/>
+    </createTable>
+
+    <!--
+    baseTableName - table in
+    baseColumnNames - column in
+    constraintName - just name
+    referencedTableName - from table
+    referencedColumnNames - from column
+    -->
+
+    <addForeignKeyConstraint baseTableName="order" baseColumnNames="base_id" constraintName="fk_order_base_id" referencedTableName="base"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="order" baseColumnNames="gas_id" constraintName="fk_order_gas_id" referencedTableName="gas"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="users" baseColumnNames="order_id" constraintName="fk_users_order_id" referencedTableName="order"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="role_id" constraintName="fk_users_role_id" referencedTableName="role"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="user_id" constraintName="fk_role_users_id" referencedTableName="users"
+                             referencedColumnNames="id"/>
+
+</changeSet>
 
 
 
