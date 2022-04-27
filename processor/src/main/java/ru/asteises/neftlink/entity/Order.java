@@ -41,6 +41,7 @@ public class Order implements Serializable {
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
     //TODO посмотреть как делать ManyToOne
+    //TODO проверить Entity и создать для каждой репозиторий
     @ManyToOne()
     private Users usersOwner;
 
