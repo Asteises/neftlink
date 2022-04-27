@@ -1,22 +1,21 @@
-package ru.asteises.neftlink.entitys;
+package ru.asteises.neftlink.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -25,7 +24,6 @@ import java.util.Date;
 @Table(name = "orders")
 public class Order implements Serializable {
 
-    @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
