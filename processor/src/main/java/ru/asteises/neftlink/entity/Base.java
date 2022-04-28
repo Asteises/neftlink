@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -29,4 +30,7 @@ public class Base implements Serializable {
 
     @Column(name = "address")
     private String address;
+
+    @OneToOne(mappedBy = "base")
+    private Order order;
 }
