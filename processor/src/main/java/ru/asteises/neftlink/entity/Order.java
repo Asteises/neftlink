@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,15 +43,17 @@ public class Order implements Serializable {
      */
     //TODO посмотреть как делать ManyToOne
     //TODO проверить Entity и создать для каждой репозиторий
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private Users usersOwner;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gas_id", nullable = false)
     private Gas gas;
 
-    @OneToOne(mappedBy = "base")
-    private Base baseOwner;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "base_id", referencedColumnName = "id")
+    private Base base;
 
     // Тут нужно выбрать подходящий класс
     @Column(name = "update_date")
