@@ -3,13 +3,17 @@ package ru.asteises.neftlink.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * Данный класс упрощает основные сущности, убирает из них все автоматизированные процессы;
  */
 
 @Getter
 @Setter
-public class GasDto {
+public class OrderDto {
 
-    private String gasType;
+    private Double cost;
+    private LocalDateTime updateDate;
+    private LocalDateTime createDate;
 }

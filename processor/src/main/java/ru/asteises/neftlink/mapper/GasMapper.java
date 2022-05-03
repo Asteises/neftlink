@@ -1,5 +1,7 @@
 package ru.asteises.neftlink.mapper;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.GasDto;
 import ru.asteises.neftlink.entity.Gas;
@@ -9,6 +11,7 @@ import ru.asteises.neftlink.entity.Gas;
  */
 @Service
 public class GasMapper {
+
 
     public Gas gasDtoToGas(GasDto gasDto) {
         Gas gas = new Gas();

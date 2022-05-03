@@ -18,6 +18,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * Основная сущность;
+ */
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -42,16 +46,15 @@ public class Order implements Serializable {
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
     //TODO посмотреть как делать ManyToOne
-    //TODO проверить Entity и создать для каждой репозиторий
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    private Users usersOwner;
+    private User usersOwner;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "gas_id", nullable = false)
     private Gas gas;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "base_id", referencedColumnName = "id")
     private Base base;
 

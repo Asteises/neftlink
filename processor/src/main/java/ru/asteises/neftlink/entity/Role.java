@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Основная сущность;
+ */
 
 @Entity
 @Table(name = "roles")

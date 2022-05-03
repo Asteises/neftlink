@@ -9,9 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
+
+/**
+ * Основная сущность;
+ */
 
 @Entity
 @NoArgsConstructor
@@ -21,9 +27,9 @@ import java.io.Serializable;
 public class Base implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -31,6 +37,6 @@ public class Base implements Serializable {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(mappedBy = "base")
-    private Order order;
+    @OneToMany(mappedBy = "base")
+    private Set<Order> orders;
 }

@@ -24,6 +24,7 @@
             <constraints nullable="false"/>
         </column>
         <column name ="address" type="VARCHAR(200)"/>
+        <column name ="order_id" type="BIGINT"/>
     </createTable>
 
     <createTable tableName="gas">
@@ -33,6 +34,7 @@
         <column name ="gas_type" type="VARCHAR(100)">
             <constraints unique="true" nullable="false"/>
         </column>
+        <column name ="order_id" type="BIGINT"/>
 
     </createTable>
 
@@ -110,6 +112,10 @@
     <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="role_id" constraintName="fk_users_role_id" referencedTableName="role"
                              referencedColumnNames="id"/>
     <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="user_id" constraintName="fk_role_users_id" referencedTableName="users"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="base" baseColumnNames="order_id" constraintName="fk_base_order_id" referencedTableName="order"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="gas" baseColumnNames="order_id" constraintName="fk_gas_order_id" referencedTableName="order"
                              referencedColumnNames="id"/>
 
 </changeSet>

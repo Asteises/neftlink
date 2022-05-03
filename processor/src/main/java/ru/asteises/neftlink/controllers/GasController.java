@@ -20,12 +20,12 @@ public class GasController {
     }
 
     /**
-     *ринимает запрос на создание нового объекта типа Gas в базу данных
+     *Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
      */
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody GasDto gasDto) {
         gasService.add(gasDto);
-        return ResponseEntity.ok("запрос успешно принят и обработан");
+        return ResponseEntity.ok("запрос на создание нового объекта Gas в базу данных успешно принят и обработан");
     }
 
 

@@ -7,9 +7,9 @@ import lombok.Setter;
  * Данный класс упрощает основные сущности, убирает из них все автоматизированные процессы;
  */
 
-@Getter
 @Setter
-public class GasDto {
+@Getter
+public class RoleDto {
 
-    private String gasType;
+    private String name;
 }

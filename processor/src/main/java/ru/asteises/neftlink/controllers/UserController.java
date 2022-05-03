@@ -1,10 +1,13 @@
 package ru.asteises.neftlink.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.asteises.neftlink.entity.Users;
+import ru.asteises.neftlink.dto.UserDto;
+import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.service.UserService;
 
 import java.util.List;
@@ -23,8 +26,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/all")
-    public List<Users> allUsers() {
-        return null;
+    /**
+     *Принимает запрос на создание нового объекта типа User в базу данных с помощью Service
+     */
+    @PostMapping("/add")
+    public ResponseEntity<String> add(UserDto userDto) {
+        userService.add(userDto);
+        return ResponseEntity.ok("запрос на создание нового объекта User в базу данных успешно принят и обработан");
     }
 }
