@@ -28,4 +28,8 @@ public class OrderMapper {
         orderDto.setUpdateDate(order.getUpdateDate());
         return orderDto;
     }
+
+    //TODO Создать Order найдя в репозитории Base (через Service) нужный Base используя findByName() и найденный добавить в Order
+    //TODO Создать Order найдя в репозитории Gas (через Service) нужный Gas используя findByGasType() и найденный добавить в Order
+    //TODO И сохранить в базу в таблицу order
 }

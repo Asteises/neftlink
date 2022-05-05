@@ -16,4 +16,6 @@ public class OrderDto {
     private Double cost;
     private LocalDateTime updateDate;
     private LocalDateTime createDate;
+    private String gasType;
+    private String baseName;
 }

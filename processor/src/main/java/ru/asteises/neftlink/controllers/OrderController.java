@@ -25,4 +25,6 @@ public class OrderController {
         orderService.add(orderDto);
         return ResponseEntity.ok("запрос на создание нового объекта Order в базу данных успешно принят и обработан");
     }
+
+    //TODO Сделать добавление Order
 }

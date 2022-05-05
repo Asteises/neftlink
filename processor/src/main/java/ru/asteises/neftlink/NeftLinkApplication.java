@@ -9,5 +9,4 @@ public class NeftLinkApplication {
     public static void main(String[] args) {
         SpringApplication.run(NeftLinkApplication.class, args);
     }
-
 }
