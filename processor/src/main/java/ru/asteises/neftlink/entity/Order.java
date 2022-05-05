@@ -24,9 +24,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "order")
-
-public class Order implements Serializable {
+@Table(name = "`order`")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
