@@ -2,6 +2,7 @@ package ru.asteises.neftlink.service;
 
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserDto;
+import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.mapper.UserMapper;
 import ru.asteises.neftlink.repositoryes.UserRepository;
 
@@ -24,5 +25,9 @@ public class UserService {
     public String add(UserDto userDto) {
         userRepository.save(userMapper.userDtoToUser(userDto));
         return "юзер успешно добавлен в репозиторий";
+    }
+
+    public User getUserByInn(int inn) {
+        return userRepository.findUserByInn(inn);
     }
 }

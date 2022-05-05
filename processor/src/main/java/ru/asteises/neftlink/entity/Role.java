@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "roles")
+@Table(name = "role")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -26,6 +26,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "role_name")
     private String name;
 }

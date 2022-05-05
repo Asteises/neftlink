@@ -4,13 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -32,7 +26,7 @@ public class Gas {
     @Column(name = "gas_type", nullable = false)
     private String gasType;
 
-    @OneToMany(mappedBy = "gas")
+    @OneToMany(mappedBy = "gas", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
 }

@@ -6,4 +6,6 @@ import ru.asteises.neftlink.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findUserByInn(int inn);
 }

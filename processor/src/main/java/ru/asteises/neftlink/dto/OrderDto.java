@@ -2,6 +2,7 @@ package ru.asteises.neftlink.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.asteises.neftlink.entity.User;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +14,10 @@ import java.time.LocalDateTime;
 @Setter
 public class OrderDto {
 
-    private Double cost;
+    private Long cost;
     private LocalDateTime updateDate;
     private LocalDateTime createDate;
     private String gasType;
     private String baseName;
+    private int inn;
 }

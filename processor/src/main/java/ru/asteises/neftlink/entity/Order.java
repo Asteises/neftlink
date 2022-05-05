@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -26,7 +24,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "orders")
+@Table(name = "order")
+
 public class Order implements Serializable {
 
     @Id
@@ -39,22 +38,22 @@ public class Order implements Serializable {
     2 - цена долго не обновлялась.
      */
     @Column(name = "cost")
-    private Double cost;
+    private Long cost;
 
     /*
     Для того, чтобы объявить сторону, которая не несет ответственности за отношения, используется атрибут mappedBy
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
     //TODO посмотреть как делать ManyToOne
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User usersOwner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "gas_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gas_id", referencedColumnName = "id", nullable = false)
     private Gas gas;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "base_id", referencedColumnName = "id")
     private Base base;
 

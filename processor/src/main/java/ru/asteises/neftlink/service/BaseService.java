@@ -2,6 +2,7 @@ package ru.asteises.neftlink.service;
 
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
+import ru.asteises.neftlink.entity.Base;
 import ru.asteises.neftlink.mapper.BaseMapper;
 import ru.asteises.neftlink.repositoryes.BaseRepository;
 
@@ -11,7 +12,7 @@ import ru.asteises.neftlink.repositoryes.BaseRepository;
 @Service
 public class BaseService {
     private final BaseRepository baseRepository;
-    private BaseMapper baseMapper;
+    private final BaseMapper baseMapper;
 
     public BaseService(BaseRepository baseRepository, BaseMapper baseMapper) {
         this.baseRepository = baseRepository;
@@ -24,5 +25,16 @@ public class BaseService {
     public String add(BaseDto baseDto) {
         baseRepository.save(baseMapper.baseDtoToBase(baseDto));
         return "базис успешно добавлен в репозиторий";
+    }
+
+    /**
+     *Ищем в репозитории объект Base по указанному baseName
+     */
+    public Base getBaseByName(String baseName) {
+        return baseRepository.findBaseByName(baseName);
+    }
+
+    public Base getBaseById(Long baseId) {
+        return baseRepository.findBaseById(baseId);
     }
 }

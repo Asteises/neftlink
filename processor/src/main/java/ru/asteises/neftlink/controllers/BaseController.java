@@ -6,14 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.asteises.neftlink.dto.BaseDto;
-import ru.asteises.neftlink.repositoryes.BaseRepository;
 import ru.asteises.neftlink.service.BaseService;
 
 @RestController
 @RequestMapping("/base")
 public class BaseController {
 
-    private BaseService baseService;
+    private final BaseService baseService;
 
     public BaseController(BaseService baseService) {
         this.baseService = baseService;
@@ -27,5 +26,4 @@ public class BaseController {
         baseService.add(baseDto);
         return ResponseEntity.ok("запрос на создание нового объекта Base в базу данных успешно принят и обработан");
     }
-
 }

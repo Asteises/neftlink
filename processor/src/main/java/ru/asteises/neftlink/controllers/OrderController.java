@@ -2,6 +2,7 @@ package ru.asteises.neftlink.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.asteises.neftlink.dto.OrderDto;
@@ -11,7 +12,7 @@ import ru.asteises.neftlink.service.OrderService;
 @RequestMapping("/order")
 public class OrderController {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
@@ -21,7 +22,7 @@ public class OrderController {
      *Принимает запрос на создание нового объекта типа Order в базу данных с помощью Service
      */
     @PostMapping("/add")
-    public ResponseEntity<String> add(OrderDto orderDto) {
+    public ResponseEntity<String> add(@RequestBody OrderDto orderDto) {
         orderService.add(orderDto);
         return ResponseEntity.ok("запрос на создание нового объекта Order в базу данных успешно принят и обработан");
     }

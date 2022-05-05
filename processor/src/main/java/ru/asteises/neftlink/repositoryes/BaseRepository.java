@@ -6,4 +6,9 @@ import ru.asteises.neftlink.entity.Base;
 
 @Repository
 public interface BaseRepository extends JpaRepository<Base, Long> {
+
+    Base findBaseByName(String name);
+
+    Base findBaseById(Long id);
+
 }

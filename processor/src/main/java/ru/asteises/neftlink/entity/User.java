@@ -1,8 +1,6 @@
 package ru.asteises.neftlink.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -64,7 +62,7 @@ public class User {
 
     Связь в БД между таблицами users и orders осуществляется посредством поля orderId в таблице users.
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Set<Order> orderList;
 

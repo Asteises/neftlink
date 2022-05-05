@@ -2,6 +2,7 @@ package ru.asteises.neftlink.service;
 
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.GasDto;
+import ru.asteises.neftlink.entity.Gas;
 import ru.asteises.neftlink.mapper.GasMapper;
 import ru.asteises.neftlink.repositoryes.GasRepository;
 
@@ -25,5 +26,13 @@ public class GasService {
     public String add(GasDto gasDto) {
         gasRepository.save(gasMapper.gasDtoToGas(gasDto));
         return "тип топлива был успешно добавлен";
+    }
+
+    public Gas getGasByName(String gasType) {
+        return gasRepository.findGasByGasType(gasType);
+    }
+
+    public Gas getGasById(Long id) {
+        return gasRepository.findGasById(id);
     }
 }

@@ -13,7 +13,7 @@ import ru.asteises.neftlink.service.GasService;
 @RequestMapping("/gas")
 public class GasController {
 
-    private GasService gasService;
+    private final GasService gasService;
 
     public GasController(GasService gasService) {
         this.gasService = gasService;
