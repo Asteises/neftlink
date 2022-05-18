@@ -5,10 +5,14 @@ import org.springframework.stereotype.Repository;
 import ru.asteises.neftlink.entity.Base;
 import ru.asteises.neftlink.entity.Gas;
 
+import java.util.List;
+
 @Repository
 public interface GasRepository extends JpaRepository<Gas, Long> {
 
     Gas findGasByGasType(String type);
 
     Gas findGasById(Long id);
+
+    List<Gas> findAllByVisibleTrue();
 }

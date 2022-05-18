@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -62,4 +61,7 @@ public class Order {
 
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate;
+
+    @Column(name = "is_visible")
+    private boolean visible;
 }

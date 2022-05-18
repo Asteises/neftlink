@@ -1,10 +1,7 @@
 package ru.asteises.neftlink.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.OrderDto;
 import ru.asteises.neftlink.service.OrderService;
 
@@ -27,5 +24,8 @@ public class OrderController {
         return ResponseEntity.ok("запрос на создание нового объекта Order в базу данных успешно принят и обработан");
     }
 
-    //TODO Сделать добавление Order
+    @PutMapping("/change/{id}")
+    public ResponseEntity<String> put(@RequestParam Long price, @PathVariable Long id) {
+        return orderService.put(price, id);
+    }
 }

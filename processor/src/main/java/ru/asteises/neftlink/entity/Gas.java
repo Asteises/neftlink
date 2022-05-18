@@ -37,6 +37,9 @@ public class Gas {
     @Column(name = "gas_type", nullable = false)
     private String gasType;
 
+    @Column(name = "is_visible")
+    private boolean visible;
+
     @OneToMany(mappedBy = "gas", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Order> orders = new ArrayList<>();

@@ -1,6 +1,5 @@
 package ru.asteises.neftlink.mapper;
 
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
@@ -16,6 +15,7 @@ public class BaseMapper {
         Base base = new Base();
         base.setName(baseDto.getName());
         base.setAddress(baseDto.getAddress());
+        base.setVisible(Boolean.TRUE);
         return base;
     }
 

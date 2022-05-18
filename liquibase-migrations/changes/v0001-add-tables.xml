@@ -25,6 +25,7 @@
         </column>
         <column name ="address" type="VARCHAR(200)"/>
         <column name ="order_id" type="BIGINT"/>
+        <column name="is_visible" type="boolean"/>
     </createTable>
 
     <createTable tableName="gas">
@@ -35,7 +36,7 @@
             <constraints unique="true" nullable="false"/>
         </column>
         <column name ="order_id" type="BIGINT"/>
-
+        <column name="is_visible" type="boolean"/>
     </createTable>
 
     <createTable tableName="order">
@@ -56,6 +57,7 @@
         <column name="user_id" type="BIGINT">
             <constraints nullable="false"/>
         </column>
+        <column name="is_visible" type="boolean"/>
      </createTable>
 
     <createTable tableName="users">
@@ -69,7 +71,7 @@
         <column name="email" type="VARCHAR(50)">
             <constraints unique="true" nullable="false"/>
         </column>
-        <column name="password" type="VARCHAR(50)">
+        <column name="password" type="VARCHAR(200)">
             <constraints nullable="false"/>
         </column>
         <column name="company" type="VARCHAR(100)"/>

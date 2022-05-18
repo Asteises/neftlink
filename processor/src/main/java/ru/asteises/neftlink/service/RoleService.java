@@ -2,6 +2,7 @@ package ru.asteises.neftlink.service;
 
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.RoleDto;
+import ru.asteises.neftlink.entity.Role;
 import ru.asteises.neftlink.mapper.RoleMapper;
 import ru.asteises.neftlink.repositoryes.RoleRepository;
 
@@ -24,5 +25,9 @@ public class RoleService {
     public String add(RoleDto roleDto) {
         roleRepository.save(roleMapper.roleToRoleDto(roleDto));
         return "роль успешно добавлена в репозиторий";
+    }
+
+    public Role getRoleUser() {
+        return roleRepository.findRoleByName("user");
     }
 }

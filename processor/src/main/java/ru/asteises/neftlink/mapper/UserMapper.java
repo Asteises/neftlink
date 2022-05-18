@@ -2,9 +2,14 @@ package ru.asteises.neftlink.mapper;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserDto;
 import ru.asteises.neftlink.entity.User;
+import ru.asteises.neftlink.service.RoleService;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Преобразует User в UserDto и обратно
@@ -12,14 +17,20 @@ import ru.asteises.neftlink.entity.User;
 
 @Service
 public class UserMapper {
+    private final RoleService roleService;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+    public UserMapper(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     public User userDtoToUser(UserDto userDto) {
         User user = new User();
         user.setInn(userDto.getInn());
         user.setCompany(userDto.getCompany());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(encoder.encode(userDto.getPassword()));
         user.setName(userDto.getName());
+        user.setRoles(Collections.singletonList(roleService.getRoleUser()));
         return user;
     }
 

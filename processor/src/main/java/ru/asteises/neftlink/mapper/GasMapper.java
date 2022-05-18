@@ -14,6 +14,7 @@ public class GasMapper {
     public Gas gasDtoToGas(GasDto gasDto) {
         Gas gas = new Gas();
         gas.setGasType(gasDto.getGasType());
+        gas.setVisible(Boolean.TRUE);
         return gas;
     }
 

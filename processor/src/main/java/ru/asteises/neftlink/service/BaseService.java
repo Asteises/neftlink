@@ -1,10 +1,15 @@
 package ru.asteises.neftlink.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
+import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.BaseMapper;
 import ru.asteises.neftlink.repositoryes.BaseRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Отвечает за всю бизнес-логику связанную с Base (все что может происходить с объектами типа Base)
@@ -20,11 +25,35 @@ public class BaseService {
     }
 
     /**
-     *Создаем объект Base из BaseDto и сохраняем в базу данных
+     * Создаем объект Base из BaseDto и сохраняем в базу данных
      */
     public String add(BaseDto baseDto) {
         baseRepository.save(baseMapper.baseDtoToBase(baseDto));
         return "базис успешно добавлен в репозиторий";
+    }
+
+    /**
+     * Пробуем заменить base по id
+     */
+    public ResponseEntity<String> put(BaseDto baseDto, Long id) {
+        Optional<Base> baseOptional = baseRepository.findById(id);
+        if (baseOptional.isPresent()) {
+            Base base = baseOptional.get();
+            base.setName(baseDto.getName());
+            base.setAddress(baseDto.getAddress());
+            baseRepository.save(base);
+            return ResponseEntity.ok("Base успещно обновлен");
+        }
+        return ResponseEntity.ok("Мы не нашли подходязий Base");
+    }
+
+    /**
+     * Добавляем base в лист bases
+     */
+    public void addOrder(Order order) {
+        Base base = order.getBase();
+        base.addOrder(order);
+        baseRepository.save(base);
     }
 
     /**
@@ -36,5 +65,21 @@ public class BaseService {
 
     public Base getBaseById(Long baseId) {
         return baseRepository.findBaseById(baseId);
+    }
+
+    public ResponseEntity<String> setVisibleFalse(Long id) {
+        Optional<Base> baseOptional = baseRepository.findById(id);
+        if (baseOptional.isPresent()) {
+            Base base = baseOptional.get();
+            base.setVisible(Boolean.FALSE);
+            baseRepository.save(base);
+            return ResponseEntity.ok("Base успешно удален");
+        }
+        return ResponseEntity.ok("Мы не смогли найти такой base");
+    }
+
+    public ResponseEntity<List<Base>> getVisibleBases() {
+        List<Base> bases = baseRepository.findAllByVisibleTrue();
+        return ResponseEntity.ok(bases);
     }
 }

@@ -41,6 +41,9 @@ public class Base implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "is_visible")
+    private boolean visible;
+
     @OneToMany(mappedBy = "base", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Order> orders = new ArrayList<>();
