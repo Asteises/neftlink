@@ -17,7 +17,7 @@
     </preConditions>
 
     <createTable tableName="base">
-    <column name="id" type="BIGINT" autoIncrement="true">
+    <column name="id" type="UUID" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
     </column>
         <column name ="name" type="VARCHAR(100)">

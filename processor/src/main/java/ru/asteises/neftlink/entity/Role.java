@@ -1,8 +1,10 @@
 package ru.asteises.neftlink.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +22,8 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Role {
+@AllArgsConstructor
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,4 +31,9 @@ public class Role {
 
     @Column(name = "role_name")
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

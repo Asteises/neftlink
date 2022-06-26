@@ -22,6 +22,9 @@ public class OrderService {
     private final GasService gasService;
     private final UserService userService;
 
+    /**
+     * Отвечает за всю бизнес-логику связанную с Order (все что может происходить с объектами типа Order)
+     */
     public OrderService(OrderRepository orderRepository,
                         OrderMapper orderMapper,
                         BaseService baseService,
@@ -37,7 +40,6 @@ public class OrderService {
     /**
      *Создаем объект Order из OrderDto и сохраняем в базу данных
      */
-    @Transactional
     public String add(OrderDto orderDto) {
         Order order = orderMapper.orderDtoToOrder(orderDto);
         orderRepository.save(order);

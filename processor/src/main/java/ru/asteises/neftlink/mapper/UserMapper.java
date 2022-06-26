@@ -1,14 +1,11 @@
 package ru.asteises.neftlink.mapper;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserDto;
 import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.service.RoleService;
 
-import java.util.Collection;
 import java.util.Collections;
 
 /**

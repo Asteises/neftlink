@@ -1,9 +1,12 @@
 package ru.asteises.neftlink.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.GasDto;
 import ru.asteises.neftlink.entity.Gas;
+import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.GasService;
 
 import java.util.List;
@@ -13,18 +16,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/gas")
+@RequiredArgsConstructor
 public class GasController {
 
     private final GasService gasService;
 
-    public GasController(GasService gasService) {
-        this.gasService = gasService;
-    }
+    private final AuthService authService;
 
     /**
      * Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
      */
     @PostMapping("/add")
+    @PreAuthorize("@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> add(@RequestBody GasDto gasDto) {
         gasService.add(gasDto);
         return ResponseEntity.ok("запрос на создание нового объекта Gas в базу данных успешно принят и обработан");

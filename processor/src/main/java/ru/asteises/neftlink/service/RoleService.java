@@ -28,6 +28,6 @@ public class RoleService {
     }
 
     public Role getRoleUser() {
-        return roleRepository.findRoleByName("user");
+        return roleRepository.findRoleByName("USER");
     }
 }

@@ -28,9 +28,12 @@ public class UserService {
      */
     public String registration(UserDto userDto) {
         userRepository.save(userMapper.userDtoToUser(userDto));
-        return "юзер успешно добавлен в репозиторий";
+        return "User успешно добавлен в репозиторий";
     }
 
+    /**
+     * Находим объект User по ID, меняем его и сохраняем обратно
+     */
     public ResponseEntity<String> put(UserDto userDto, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
@@ -55,5 +58,9 @@ public class UserService {
 
     public User getUserByInn(int inn) {
         return userRepository.findUserByInn(inn);
+    }
+
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

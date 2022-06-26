@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
 
+import java.util.UUID;
+
 /**
  * Преобразует Base в BaseDto и обратно
  */
@@ -13,6 +15,7 @@ public class BaseMapper {
 
     public Base baseDtoToBase(BaseDto baseDto) {
         Base base = new Base();
+        base.setId(UUID.randomUUID());
         base.setName(baseDto.getName());
         base.setAddress(baseDto.getAddress());
         base.setVisible(Boolean.TRUE);
