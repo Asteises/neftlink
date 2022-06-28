@@ -8,6 +8,7 @@ import ru.asteises.neftlink.service.GasService;
 import ru.asteises.neftlink.service.UserService;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Преобразует Order в OrderDto и обратно
@@ -28,6 +29,7 @@ public class OrderMapper {
 
     public Order orderDtoToOrder(OrderDto orderDto) {
         Order order = new Order();
+        order.setId(UUID.randomUUID());
         order.setCost(orderDto.getCost());
         order.setCreateDate(LocalDateTime.now());
         order.setUpdateDate(LocalDateTime.now());

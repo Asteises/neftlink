@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.UserDto;
 import ru.asteises.neftlink.service.UserService;
 
+import java.util.UUID;
+
 /**
 REST определяет стиль взаимодействия (обмена данными) между разными компонентами системы. Аннотация @RestController
 в Spring MVC – это не что иное, как сочетание аннотации @Controller и @ResponseBody.
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity<String> put(@RequestBody UserDto userDto, @PathVariable Long id) {
+    public ResponseEntity<String> put(@RequestBody UserDto userDto, @PathVariable UUID id) {
         return userService.put(userDto, id);
     }
 }

@@ -7,6 +7,7 @@ import ru.asteises.neftlink.entity.Base;
 import ru.asteises.neftlink.service.BaseService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/base")
@@ -28,12 +29,12 @@ public class BaseController {
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity<String> put(@RequestBody BaseDto baseDto, @PathVariable Long id) {
+    public ResponseEntity<String> put(@RequestBody BaseDto baseDto, @PathVariable UUID id) {
         return baseService.put(baseDto, id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteBase(@PathVariable Long id) {
+    public ResponseEntity<String> deleteBase(@PathVariable UUID id) {
         return baseService.setVisibleFalse(id);
     }
 

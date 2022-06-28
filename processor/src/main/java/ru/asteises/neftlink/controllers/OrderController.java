@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.OrderDto;
 import ru.asteises.neftlink.service.OrderService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -25,7 +27,7 @@ public class OrderController {
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity<String> put(@RequestParam Long price, @PathVariable Long id) {
+    public ResponseEntity<String> put(@RequestParam Long price, @PathVariable UUID id) {
         return orderService.put(price, id);
     }
 }

@@ -3,6 +3,8 @@ package ru.asteises.neftlink.securityConfig.jwt;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 @AllArgsConstructor
 public class JwtResponse {
@@ -10,5 +12,5 @@ public class JwtResponse {
     private final String type = "Bearer";
     private String accessToken;
     private String refreshToken;
-    private long id;
+    private UUID id;
 }

@@ -51,7 +51,7 @@ public class AuthService {
                 return new JwtResponse(accessToken, null, user.getId());
             }
         }
-        return new JwtResponse(null, null, -1);
+        return new JwtResponse(null, null, null);
     }
 
     public JwtResponse refresh(@NonNull String refreshToken) throws AuthException {

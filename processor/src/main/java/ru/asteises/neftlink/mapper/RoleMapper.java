@@ -1,10 +1,10 @@
 package ru.asteises.neftlink.mapper;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.RoleDto;
 import ru.asteises.neftlink.entity.Role;
+
+import java.util.UUID;
 
 /**
  * Преобразует Role в RoleDto и обратно
@@ -15,6 +15,7 @@ public class RoleMapper {
 
     public Role roleToRoleDto(RoleDto roleDto) {
         Role role = new Role();
+        role.setId(UUID.randomUUID());
         role.setName(roleDto.getName());
         return role;
     }

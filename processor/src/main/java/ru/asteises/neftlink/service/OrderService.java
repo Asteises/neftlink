@@ -7,9 +7,9 @@ import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Отвечает за всю бизнес-логику связанную с Order (все что может происходить с объектами типа Order)
@@ -52,7 +52,7 @@ public class OrderService {
     /**
      * Находим объект Order по ID, меняем цену и время обновлекния
      */
-    public ResponseEntity<String> put(Long price, Long id) {
+    public ResponseEntity<String> put(Long price, UUID id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();

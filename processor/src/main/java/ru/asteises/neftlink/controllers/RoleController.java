@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.asteises.neftlink.dto.RoleDto;
-import ru.asteises.neftlink.entity.Role;
 import ru.asteises.neftlink.service.RoleService;
-import ru.asteises.neftlink.service.UserService;
 
 @RestController
 @RequestMapping("/role")

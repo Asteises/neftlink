@@ -10,6 +10,7 @@ import ru.asteises.neftlink.repositoryes.BaseRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Отвечает за всю бизнес-логику связанную с Base (все что может происходить с объектами типа Base)
@@ -35,7 +36,7 @@ public class BaseService {
     /**
      * Пробуем заменить base по id
      */
-    public ResponseEntity<String> put(BaseDto baseDto, Long id) {
+    public ResponseEntity<String> put(BaseDto baseDto, UUID id) {
         Optional<Base> baseOptional = baseRepository.findById(id);
         if (baseOptional.isPresent()) {
             Base base = baseOptional.get();
@@ -63,11 +64,11 @@ public class BaseService {
         return baseRepository.findBaseByName(baseName);
     }
 
-    public Base getBaseById(Long baseId) {
+    public Base getBaseById(UUID baseId) {
         return baseRepository.findBaseById(baseId);
     }
 
-    public ResponseEntity<String> setVisibleFalse(Long id) {
+    public ResponseEntity<String> setVisibleFalse(UUID id) {
         Optional<Base> baseOptional = baseRepository.findById(id);
         if (baseOptional.isPresent()) {
             Base base = baseOptional.get();

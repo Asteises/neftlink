@@ -4,16 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Основная сущность;
@@ -27,18 +20,17 @@ import java.time.LocalDateTime;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
-    /*
+    /**
     Стоимость может быть не указана исходя из некоторых условий. 1 - просто нет цены от поставщика.
     2 - цена долго не обновлялась.
      */
     @Column(name = "cost")
     private Long cost;
 
-    /*
+    /**
     Для того, чтобы объявить сторону, которая не несет ответственности за отношения, используется атрибут mappedBy
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */

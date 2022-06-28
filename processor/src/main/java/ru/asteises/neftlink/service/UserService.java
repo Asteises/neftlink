@@ -9,6 +9,7 @@ import ru.asteises.neftlink.mapper.UserMapper;
 import ru.asteises.neftlink.repositoryes.UserRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Отвечает за всю бизнес-логику связанную с User (все что может происходить с объектами типа User)
@@ -34,7 +35,7 @@ public class UserService {
     /**
      * Находим объект User по ID, меняем его и сохраняем обратно
      */
-    public ResponseEntity<String> put(UserDto userDto, Long id) {
+    public ResponseEntity<String> put(UserDto userDto, UUID id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();

@@ -10,6 +10,7 @@ import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.GasService;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Контроллер - принимамет и отвечает на запросы
@@ -27,7 +28,7 @@ public class GasController {
      * Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
      */
     @PostMapping("/add")
-    @PreAuthorize("@authService.authInfo.hasRole('ADMIN')")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> add(@RequestBody GasDto gasDto) {
         gasService.add(gasDto);
         return ResponseEntity.ok("запрос на создание нового объекта Gas в базу данных успешно принят и обработан");
@@ -36,8 +37,8 @@ public class GasController {
     /**
      * Принимаем запрос на замену gas по id
      */
-    @PutMapping("/change/{ip}")
-    public ResponseEntity<String> put(@RequestBody GasDto gasDto, Long id) {
+    @PutMapping("/change/{id}")
+    public ResponseEntity<String> put(@RequestBody GasDto gasDto, UUID id) {
         return gasService.put(gasDto, id);
     }
 
@@ -47,7 +48,7 @@ public class GasController {
      * Принимаем запрос на удаление gas, по факте изменяем visible gas для пользователя
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteGas(@PathVariable Long id) {
+    public ResponseEntity<String> deleteGas(@PathVariable UUID id) {
         return gasService.setVisibleFalse(id);
     }
 

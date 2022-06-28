@@ -10,6 +10,7 @@ import ru.asteises.neftlink.repositoryes.GasRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Отвечает за всю бизнес-логику связанную с Gas (все что может происходить с объектами типа Gas)
@@ -36,7 +37,7 @@ public class GasService {
     /**
      * Пробуем заменить gas по id
      */
-    public ResponseEntity<String> put(GasDto gasDto, Long id) {
+    public ResponseEntity<String> put(GasDto gasDto, UUID id) {
         Optional<Gas> gasOptional = gasRepository.findById(id);
         if (gasOptional.isPresent()) {
             Gas gas = gasOptional.get();
@@ -66,14 +67,14 @@ public class GasService {
     /**
      * Достаем gas по id
      */
-    public Gas getGasById(Long id) {
+    public Gas getGasById(UUID id) {
         return gasRepository.findGasById(id);
     }
 
     /**
      * Меняем gas visible
      */
-    public ResponseEntity<String> setVisibleFalse(Long id) {
+    public ResponseEntity<String> setVisibleFalse(UUID id) {
         Optional<Gas> optionalGas = gasRepository.findById(id);
         if (optionalGas.isPresent()) {
             Gas gas = optionalGas.get();

@@ -7,6 +7,7 @@ import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.service.RoleService;
 
 import java.util.Collections;
+import java.util.UUID;
 
 /**
  * Преобразует User в UserDto и обратно
@@ -22,6 +23,7 @@ public class UserMapper {
 
     public User userDtoToUser(UserDto userDto) {
         User user = new User();
+        user.setId(UUID.randomUUID());
         user.setInn(userDto.getInn());
         user.setCompany(userDto.getCompany());
         user.setEmail(userDto.getEmail());
