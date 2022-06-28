@@ -1,6 +1,6 @@
 package ru.asteises.neftlink.entity;
 
-import lombok.*;
+import  lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

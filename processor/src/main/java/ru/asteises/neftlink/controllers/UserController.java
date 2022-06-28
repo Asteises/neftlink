@@ -1,10 +1,20 @@
 package ru.asteises.neftlink.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.asteises.neftlink.dto.UserDto;
+import ru.asteises.neftlink.securityConfig.jwt.JwtRequest;
+import ru.asteises.neftlink.securityConfig.jwt.JwtResponse;
+import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.UserService;
 
+import javax.security.auth.message.AuthException;
 import java.util.UUID;
 
 /**
@@ -12,22 +22,23 @@ REST определяет стиль взаимодействия (обмена 
 в Spring MVC – это не что иное, как сочетание аннотации @Controller и @ResponseBody.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final AuthService authService;
+
 
     /**
      *Принимает запрос на создание нового объекта типа User в базу данных с помощью Service
      */
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody UserDto userDto) {
+    public ResponseEntity<JwtResponse> registration(@RequestBody UserDto userDto) throws AuthException {
         userService.registration(userDto);
-        return ResponseEntity.ok("запрос на создание нового объекта User в базу данных успешно принят и обработан");
+        JwtRequest jwtRequest = new JwtRequest(userDto.getEmail(), userDto.getPassword());
+        return ResponseEntity.ok(authService.login(jwtRequest));
     }
 
     @PutMapping("/change/{id}")

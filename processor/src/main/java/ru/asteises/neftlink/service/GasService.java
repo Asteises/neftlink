@@ -19,18 +19,16 @@ import java.util.UUID;
 public class GasService {
 
     private final GasRepository gasRepository;
-    private final GasMapper gasMapper;
 
-    public GasService(GasRepository gasRepository, GasMapper gasMapper) {
+    public GasService(GasRepository gasRepository) {
         this.gasRepository = gasRepository;
-        this.gasMapper = gasMapper;
     }
 
     /**
      * Создаем объект Gas из GasDto и сохраняем в базу данных
      */
     public String add(GasDto gasDto) {
-        gasRepository.save(gasMapper.gasDtoToGas(gasDto));
+        gasRepository.save(GasMapper.INSTANCE.gasDtoToGas(gasDto));
         return "тип топлива был успешно добавлен";
     }
 

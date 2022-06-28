@@ -17,30 +17,30 @@
     </preConditions>
 
     <createTable tableName="base">
-    <column name="id" type="UUID" autoIncrement="true">
+    <column name="id" type="UUID">
             <constraints primaryKey="true" nullable="false"/>
     </column>
         <column name ="name" type="VARCHAR(100)">
             <constraints unique="true" nullable="false"/>
         </column>
         <column name ="address" type="VARCHAR(200)"/>
-        <column name ="order_id" type="BIGINT"/>
+        <column name ="order_id" type="UUID"/>
         <column name="is_visible" type="boolean"/>
     </createTable>
 
     <createTable tableName="gas">
-        <column name="id" type="BIGINT" autoIncrement="true">
+        <column name="id" type="UUID">
             <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name ="gas_type" type="VARCHAR(100)">
             <constraints unique="true" nullable="false"/>
         </column>
-        <column name ="order_id" type="BIGINT"/>
+        <column name ="order_id" type="UUID"/>
         <column name="is_visible" type="boolean"/>
     </createTable>
 
     <createTable tableName="order">
-        <column name="id" type="BIGINT" autoIncrement="true">
+        <column name="id" type="UUID">
         <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name="cost" type="BIGINT"/>
@@ -48,20 +48,20 @@
             <constraints nullable="false"/>
         </column>
         <column name="update_date" type="TIMESTAMP"/>
-        <column name="gas_id" type="BIGINT">
+        <column name="gas_id" type="UUID">
             <constraints nullable="false"/>
         </column>
-        <column name="base_id" type="BIGINT">
+        <column name="base_id" type="UUID">
             <constraints nullable="false"/>
         </column>
-        <column name="user_id" type="BIGINT">
+        <column name="user_id" type="UUID">
             <constraints nullable="false"/>
         </column>
         <column name="is_visible" type="boolean"/>
      </createTable>
 
     <createTable tableName="users">
-        <column name="id" type="BIGINT" autoIncrement="true">
+        <column name="id" type="UUID">
             <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name="name" type="VARCHAR(50)"/>
@@ -75,13 +75,13 @@
             <constraints nullable="false"/>
         </column>
         <column name="company" type="VARCHAR(100)"/>
-        <column name="order_id" type="BIGINT">
+        <column name="order_id" type="UUID">
             <constraints unique="true"/>
         </column>
     </createTable>
 
     <createTable tableName="role">
-        <column name="id" type="BIGINT" autoIncrement="true">
+        <column name="id" type="UUID">
             <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name ="role_name" type="VARCHAR(15)">
@@ -90,10 +90,10 @@
     </createTable>
 
     <createTable tableName="users_roles">
-        <column name="user_id" type="BIGINT">
+        <column name="user_id" type="UUID">
             <constraints nullable="false"/>
         </column>
-        <column name ="role_id" type="BIGINT">
+        <column name ="role_id" type="UUID">
             <constraints nullable="false"/>
         </column>
     </createTable>
@@ -121,6 +121,14 @@
     <addForeignKeyConstraint baseTableName="gas" baseColumnNames="order_id" constraintName="fk_gas_order_id" referencedTableName="order"
                              referencedColumnNames="id"/>
 
+    <insert tableName="role">
+        <column name="id" value="123e4567-e89b-12d3-a456-426655440000"/>
+        <column name="role_name" value="ADMIN"/>
+    </insert>
+    <insert tableName="role">
+        <column name="id" value="223e4567-e89b-12d3-a456-426655440000"/>
+        <column name="role_name" value="USER"/>
+    </insert>
 </changeSet>
 
 

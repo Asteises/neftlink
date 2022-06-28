@@ -28,4 +28,5 @@ public class BaseMapper {
         baseDto.setAddress(base.getAddress());
         return baseDto;
     }
+    //TODO Создать mapper
 }
