@@ -6,6 +6,7 @@ import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.BaseMapper;
+import ru.asteises.neftlink.mapper.GasMapper;
 import ru.asteises.neftlink.repositoryes.BaseRepository;
 
 import java.util.List;
@@ -18,18 +19,16 @@ import java.util.UUID;
 @Service
 public class BaseService {
     private final BaseRepository baseRepository;
-    private final BaseMapper baseMapper;
 
-    public BaseService(BaseRepository baseRepository, BaseMapper baseMapper) {
+    public BaseService(BaseRepository baseRepository) {
         this.baseRepository = baseRepository;
-        this.baseMapper = baseMapper;
     }
 
     /**
      * Создаем объект Base из BaseDto и сохраняем в базу данных
      */
     public String add(BaseDto baseDto) {
-        baseRepository.save(baseMapper.baseDtoToBase(baseDto));
+        baseRepository.save(BaseMapper.INSTANCE.toBase(baseDto));
         return "базис успешно добавлен в репозиторий";
     }
 

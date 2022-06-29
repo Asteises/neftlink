@@ -1,6 +1,10 @@
 package ru.asteises.neftlink.mapper;
 
-import org.springframework.stereotype.Service;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
 
@@ -10,23 +14,15 @@ import java.util.UUID;
  * Преобразует Base в BaseDto и обратно
  */
 
-@Service
-public class BaseMapper {
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD, imports = {UUID.class})
+public abstract class BaseMapper {
 
-    public Base baseDtoToBase(BaseDto baseDto) {
-        Base base = new Base();
-        base.setId(UUID.randomUUID());
-        base.setName(baseDto.getName());
-        base.setAddress(baseDto.getAddress());
-        base.setVisible(Boolean.TRUE);
-        return base;
-    }
+    public static final BaseMapper INSTANCE = Mappers.getMapper(BaseMapper.class);
 
-    public BaseDto baseToBaseDto(Base base) {
-        BaseDto baseDto = new BaseDto();
-        baseDto.setName(base.getName());
-        baseDto.setAddress(base.getAddress());
-        return baseDto;
-    }
-    //TODO Создать mapper
+    @Mapping(target = "id", expression = "java(UUID.randomUUID())")
+    @Mapping(target = "visible", expression = "java(Boolean.TRUE)")
+    public abstract Base toBase(BaseDto baseDto);
+
+    @InheritInverseConfiguration
+    public abstract BaseDto toDto(Base base);
 }
