@@ -24,7 +24,6 @@
             <constraints unique="true" nullable="false"/>
         </column>
         <column name ="address" type="VARCHAR(200)"/>
-        <column name ="order_id" type="UUID"/>
         <column name="is_visible" type="boolean"/>
     </createTable>
 
@@ -35,7 +34,6 @@
         <column name ="gas_type" type="VARCHAR(100)">
             <constraints unique="true" nullable="false"/>
         </column>
-        <column name ="order_id" type="UUID"/>
         <column name="is_visible" type="boolean"/>
     </createTable>
 
@@ -75,9 +73,6 @@
             <constraints nullable="false"/>
         </column>
         <column name="company" type="VARCHAR(100)"/>
-        <column name="order_id" type="UUID">
-            <constraints unique="true"/>
-        </column>
     </createTable>
 
     <createTable tableName="role">
@@ -110,15 +105,9 @@
                              referencedColumnNames="id"/>
     <addForeignKeyConstraint baseTableName="order" baseColumnNames="gas_id" constraintName="fk_order_gas_id" referencedTableName="gas"
                              referencedColumnNames="id"/>
-    <addForeignKeyConstraint baseTableName="users" baseColumnNames="order_id" constraintName="fk_users_order_id" referencedTableName="order"
-                             referencedColumnNames="id"/>
     <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="role_id" constraintName="fk_users_role_id" referencedTableName="role"
                              referencedColumnNames="id"/>
     <addForeignKeyConstraint baseTableName="users_roles" baseColumnNames="user_id" constraintName="fk_role_users_id" referencedTableName="users"
-                             referencedColumnNames="id"/>
-    <addForeignKeyConstraint baseTableName="base" baseColumnNames="order_id" constraintName="fk_base_order_id" referencedTableName="order"
-                             referencedColumnNames="id"/>
-    <addForeignKeyConstraint baseTableName="gas" baseColumnNames="order_id" constraintName="fk_gas_order_id" referencedTableName="order"
                              referencedColumnNames="id"/>
 
     <insert tableName="role">
@@ -128,6 +117,18 @@
     <insert tableName="role">
         <column name="id" value="223e4567-e89b-12d3-a456-426655440000"/>
         <column name="role_name" value="USER"/>
+    </insert>
+    <insert tableName="users">
+        <column name="id" value="323e4567-e89b-12d3-a456-426655440000"/>
+        <column name="company" value="NEFTLINK"/>
+        <column name="email" value="admin@neftlink.ru"/>
+        <column name="inn" value="77777777"/>
+        <column name="name" value="Admin"/>
+        <column name="password" value="$2a$08$WCAY6v2fN5AkjSHi9EGkIOs3C9tQze.L/rwPHht/g2rE/ZQxLUFyq"/>
+    </insert>
+    <insert tableName="users_roles">
+        <column name="user_id" value="323e4567-e89b-12d3-a456-426655440000"/>
+        <column name="role_id" value="123e4567-e89b-12d3-a456-426655440000"/>
     </insert>
 </changeSet>
 

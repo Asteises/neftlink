@@ -47,15 +47,6 @@ public class GasService {
     }
 
     /**
-     * Добавляем order в лист orders
-     */
-    public void addOrder(Order order) {
-        Gas gas = order.getGas();
-        gas.addOrder(order);
-        gasRepository.save(gas);
-    }
-
-    /**
      * Достаем gas по gasType
      */
     public Gas getGasByName(String gasType) {

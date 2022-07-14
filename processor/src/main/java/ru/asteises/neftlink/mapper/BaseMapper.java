@@ -14,7 +14,9 @@ import java.util.UUID;
  * Преобразует Base в BaseDto и обратно
  */
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD, imports = {UUID.class})
+@Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.FIELD,
+        imports = {UUID.class})
 public abstract class BaseMapper {
 
     public static final BaseMapper INSTANCE = Mappers.getMapper(BaseMapper.class);

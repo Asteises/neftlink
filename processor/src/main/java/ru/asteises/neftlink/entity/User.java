@@ -55,10 +55,6 @@ public class User {
 
     Связь в БД между таблицами users и orders осуществляется посредством поля orderId в таблице users.
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @ToString.Exclude
-    private List<Order> orders = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -69,10 +65,6 @@ public class User {
 
     public void addRole(Role role) {
         roles.add(role);
-    }
-
-    public void addOrder(Order order) {
-        orders.add(order);
     }
 
     @Override

@@ -17,6 +17,8 @@ import java.util.UUID;
 @Service
 public class OrderMapper {
 
+    //TODO Сделать @Mapper
+
     private final BaseService baseService;
     private final GasService gasService;
     private final UserService userService;

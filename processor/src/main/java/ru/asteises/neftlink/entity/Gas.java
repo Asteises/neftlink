@@ -33,14 +33,6 @@ public class Gas {
     @Column(name = "is_visible")
     private boolean visible;
 
-    @OneToMany(mappedBy = "gas", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Order> orders = new ArrayList<>();
-
-    public void addOrder(Order order) {
-        orders.add(order);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

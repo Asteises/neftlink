@@ -48,15 +48,6 @@ public class BaseService {
     }
 
     /**
-     * Добавляем base в лист bases
-     */
-    public void addOrder(Order order) {
-        Base base = order.getBase();
-        base.addOrder(order);
-        baseRepository.save(base);
-    }
-
-    /**
      *Ищем в репозитории объект Base по указанному baseName
      */
     public Base getBaseByName(String baseName) {

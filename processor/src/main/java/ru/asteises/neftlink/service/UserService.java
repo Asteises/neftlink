@@ -1,5 +1,6 @@
 package ru.asteises.neftlink.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserDto;
@@ -15,20 +16,16 @@ import java.util.UUID;
  * Отвечает за всю бизнес-логику связанную с User (все что может происходить с объектами типа User)
  */
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private UserMapper userMapper;
-
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
+    private final RoleService roleService;
 
     /**
      *Создаем объект User из UserDto и сохраняем в базу данных
      */
     public String registration(UserDto userDto) {
-        userRepository.save(userMapper.userDtoToUser(userDto));
+        userRepository.save(UserMapper.INSTANCE.toUser(userDto, roleService));
         return "User успешно добавлен в репозиторий";
     }
 
@@ -48,13 +45,6 @@ public class UserService {
             return ResponseEntity.ok("User успешно обновлен");
         }
         return ResponseEntity.ok("Мы не нашли подходящего User");
-    }
-
-    //TODO Добавить метод addOrder()
-    public void addOrder(Order order) {
-        User user = order.getUser();
-        user.addOrder(order);
-        userRepository.save(user);
     }
 
     public User getUserByInn(int inn) {

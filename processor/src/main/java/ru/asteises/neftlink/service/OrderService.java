@@ -1,5 +1,6 @@
 package ru.asteises.neftlink.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
@@ -15,27 +16,10 @@ import java.util.UUID;
  * Отвечает за всю бизнес-логику связанную с Order (все что может происходить с объектами типа Order)
  */
 @Service
+@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final BaseService baseService;
-    private final GasService gasService;
-    private final UserService userService;
-
-    /**
-     * Отвечает за всю бизнес-логику связанную с Order (все что может происходить с объектами типа Order)
-     */
-    public OrderService(OrderRepository orderRepository,
-                        OrderMapper orderMapper,
-                        BaseService baseService,
-                        GasService gasService,
-                        UserService userService) {
-        this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
-        this.baseService = baseService;
-        this.gasService = gasService;
-        this.userService = userService;
-    }
 
     /**
      *Создаем объект Order из OrderDto и сохраняем в базу данных
@@ -43,9 +27,6 @@ public class OrderService {
     public String add(OrderDto orderDto) {
         Order order = orderMapper.orderDtoToOrder(orderDto);
         orderRepository.save(order);
-        baseService.addOrder(order);
-        gasService.addOrder(order);
-        userService.addOrder(order);
         return "заказ успешно добавлен в репозиторий";
     }
 
