@@ -2,7 +2,6 @@ package ru.asteises.neftlink.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.asteises.neftlink.entity.User;
 
 import java.time.LocalDateTime;
 

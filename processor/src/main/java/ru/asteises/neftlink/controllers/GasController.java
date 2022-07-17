@@ -38,6 +38,7 @@ public class GasController {
      * Принимаем запрос на замену gas по id
      */
     @PutMapping("/change/{id}")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> put(@RequestBody GasDto gasDto, UUID id) {
         return gasService.put(gasDto, id);
     }
@@ -48,6 +49,7 @@ public class GasController {
      * Принимаем запрос на удаление gas, по факте изменяем visible gas для пользователя
      */
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> deleteGas(@PathVariable UUID id) {
         return gasService.setVisibleFalse(id);
     }

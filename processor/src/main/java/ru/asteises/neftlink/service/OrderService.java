@@ -9,6 +9,7 @@ import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,13 +20,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
+    private final UserService userService;
+    private final GasService gasService;
+    private final BaseService baseService;
 
     /**
      *Создаем объект Order из OrderDto и сохраняем в базу данных
      */
     public String add(OrderDto orderDto) {
-        Order order = orderMapper.orderDtoToOrder(orderDto);
+        Order order = OrderMapper.INSTANCE.toOrder(orderDto, userService, gasService, baseService);
         orderRepository.save(order);
         return "заказ успешно добавлен в репозиторий";
     }
@@ -33,15 +36,47 @@ public class OrderService {
     /**
      * Находим объект Order по ID, меняем цену и время обновлекния
      */
-    public ResponseEntity<String> put(Long price, UUID id) {
-        Optional<Order> optionalOrder = orderRepository.findById(id);
+    public ResponseEntity<String> put(Long price, UUID orderId, UUID userId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            order.setCost(price);
-            order.setUpdateDate(LocalDateTime.now());
-            orderRepository.save(order);
-            return ResponseEntity.ok("Order.Cost успешно обновлена");
+            if (order.getUser().getId().equals(userId)) {
+                order.setCost(price);
+                order.setUpdateDate(LocalDateTime.now());
+                orderRepository.save(order);
+                return ResponseEntity.ok("Order.Cost успешно обновлена");
+            } else {
+                return ResponseEntity.ok("Order не принадлежит данному User");
+            }
         }
         return ResponseEntity.ok("мы не нашли подходящий Order");
+    }
+
+    /**
+     * Меняем order visible
+     */
+    public ResponseEntity<String> setVisibleFalse(UUID orderId, UUID userId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            if (order.getUser().getId().equals(userId)) {
+                order.setVisible(Boolean.FALSE);
+                orderRepository.save(order);
+                order.setUpdateDate(LocalDateTime.now());
+                orderRepository.save(order);
+                return ResponseEntity.ok("Order.Cost успешно обновлена");
+            } else {
+                return ResponseEntity.ok("Order не принадлежит данному User");
+            }
+        }
+        return ResponseEntity.ok("Мы не нашли подходящй order");
+    }
+
+    /**
+     * Доставем все order
+     */
+    public ResponseEntity<List<Order>> getVisibleOrders() {
+        List<Order> orders = orderRepository.findAllByVisibleTrue();
+        return ResponseEntity.ok(orders);
     }
 }

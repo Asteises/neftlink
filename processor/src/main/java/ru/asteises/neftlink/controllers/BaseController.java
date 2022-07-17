@@ -1,6 +1,7 @@
 package ru.asteises.neftlink.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
@@ -23,17 +24,20 @@ public class BaseController {
      *Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
      */
     @PostMapping("/add")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> add(@RequestBody BaseDto baseDto) {
         baseService.add(baseDto);
         return ResponseEntity.ok("запрос на создание нового объекта Base в базу данных успешно принят и обработан");
     }
 
     @PutMapping("/change/{id}")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> put(@RequestBody BaseDto baseDto, @PathVariable UUID id) {
         return baseService.put(baseDto, id);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> deleteBase(@PathVariable UUID id) {
         return baseService.setVisibleFalse(id);
     }

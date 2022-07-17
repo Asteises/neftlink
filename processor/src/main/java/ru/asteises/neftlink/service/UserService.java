@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserDto;
-import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.mapper.UserMapper;
 import ru.asteises.neftlink.repositoryes.UserRepository;
