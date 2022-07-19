@@ -35,15 +35,15 @@ public class Order {
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
     //TODO посмотреть как делать ManyToOne
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gas_id", referencedColumnName = "id", nullable = false)
     private Gas gas;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_id", referencedColumnName = "id")
     private Base base;
 

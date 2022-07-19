@@ -1,7 +1,9 @@
 package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
@@ -74,20 +76,32 @@ public class OrderService {
     }
 
     /**
-     * Доставем все order
+     * Достаем все order
      */
     public ResponseEntity<List<Order>> getVisibleOrders() {
-        List<Order> orders = orderRepository.findAllByVisibleTrue();
+        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+        List<Order> orders = orderRepository.findAllByVisibleTrue(Sort.by("updateDate").descending());
         return ResponseEntity.ok(orders);
     }
 
-    public ResponseEntity<List<Order>> getOrdersByCost(Long from) {
-        List<Order> orders = orderRepository.findOrdersByCostGreaterThan(from);
+    public ResponseEntity<List<Order>> getOrdersByCost(Long from, Long to) {
+        List<Order> orders = orderRepository.findAllByCostBetween(from, to);
         return ResponseEntity.ok(orders);
     }
 
-    public ResponseEntity<Order> getOrderByCost(Long cost) {
-        Order order = orderRepository.findOrderByCost(cost);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<List<Order>> getOrdersByGas(String gasType) {
+        List<Order> orders = orderRepository.findAllByGas_GasType(gasType);
+        return ResponseEntity.ok(orders);
     }
+
+    public ResponseEntity<List<Order>> getOrdersByBase(String baseName) {
+        List<Order> orders = orderRepository.findAllByBaseName(baseName);
+        return ResponseEntity.ok(orders);
+    }
+
+    public ResponseEntity<List<Order>> getOrdersByUser(UUID userId) {
+        List<Order> orders = orderRepository.findAllByUserId(userId);
+        return ResponseEntity.ok(orders);
+    }
+
 }

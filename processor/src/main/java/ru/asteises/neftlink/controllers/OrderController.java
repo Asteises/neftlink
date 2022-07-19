@@ -47,12 +47,27 @@ public class OrderController {
     }
 
     @GetMapping("/search/")
-    public ResponseEntity<List<Order>> getByCost(@RequestParam Long from) {
-        return orderService.getOrdersByCost(from);
+    public ResponseEntity<List<Order>> getByCost(@RequestParam Long from, Long to) {
+        return orderService.getOrdersByCost(from, to);
     }
 
 //    @GetMapping("/search/")
 //    public ResponseEntity<Order> getOrderByCost(@RequestParam Long cost) {
 //        return orderService.getOrderByCost(cost);
 //    }
+    @GetMapping("/search/gas/")
+    public ResponseEntity<List<Order>> getByGas(@RequestParam String gasType) {
+        return orderService.getOrdersByGas(gasType);
+    }
+
+    @GetMapping("/search/base/")
+    public ResponseEntity<List<Order>> getByBase(@RequestParam String baseName) {
+        return orderService.getOrdersByBase(baseName);
+    }
+
+    @GetMapping("/search/user/")
+    public ResponseEntity<List<Order>> getByUser(@RequestParam UUID userId) {
+        return orderService.getOrdersByUser(userId);
+    }
+
 }
