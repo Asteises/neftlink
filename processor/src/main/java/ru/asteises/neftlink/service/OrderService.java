@@ -1,6 +1,7 @@
 package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
@@ -78,5 +79,15 @@ public class OrderService {
     public ResponseEntity<List<Order>> getVisibleOrders() {
         List<Order> orders = orderRepository.findAllByVisibleTrue();
         return ResponseEntity.ok(orders);
+    }
+
+    public ResponseEntity<List<Order>> getOrdersByCost(Long from) {
+        List<Order> orders = orderRepository.findOrdersByCostGreaterThan(from);
+        return ResponseEntity.ok(orders);
+    }
+
+    public ResponseEntity<Order> getOrderByCost(Long cost) {
+        Order order = orderRepository.findOrderByCost(cost);
+        return ResponseEntity.ok(order);
     }
 }

@@ -1,24 +1,13 @@
 package ru.asteises.neftlink.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.OrderDto;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.service.OrderService;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order")
@@ -58,35 +47,12 @@ public class OrderController {
     }
 
     @GetMapping("/search/")
-    public ResponseEntity<List<Order>> getByCost(@RequestParam Long from,
-                                                 Long to) {
-        List<Order> orders = orderService.getVisibleOrders().getBody();
-        orders.stream().filter(order -> order.getCost() >= from && order.getCost() <= to).collect(Collectors.toList());
-        return (ResponseEntity<List<Order>>) orders;
+    public ResponseEntity<List<Order>> getByCost(@RequestParam Long from) {
+        return orderService.getOrdersByCost(from);
     }
 
-    @GetMapping("/search/cost")
-    public ResponseEntity<List<Order>> getByMinCost() {
-        List<Order> orders = orderService.getVisibleOrders().getBody();
-        return (ResponseEntity<List<Order>>) orders.stream()
-                .sorted(Comparator.comparingLong(Order::getCost))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/search/cost")
-    public ResponseEntity<List<Order>> getByMaxCost() {
-        List<Order> orders = orderService.getVisibleOrders().getBody();
-        return (ResponseEntity<List<Order>>) orders.stream()
-                .sorted(Comparator.comparingLong(Order::getCost).reversed())
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/search/date")
-    public ResponseEntity<List<Order>> getByDate(@RequestParam LocalDateTime from
-            , LocalDateTime to) {
-        List<Order> orders = orderService.getVisibleOrders().getBody();
-        return (ResponseEntity<List<Order>>) orders.stream()
-                .filter(date -> date.getUpdateDate().isAfter(from) && date.getUpdateDate().isBefore(to))
-                .collect(Collectors.toList());
-    }
+//    @GetMapping("/search/")
+//    public ResponseEntity<Order> getOrderByCost(@RequestParam Long cost) {
+//        return orderService.getOrderByCost(cost);
+//    }
 }

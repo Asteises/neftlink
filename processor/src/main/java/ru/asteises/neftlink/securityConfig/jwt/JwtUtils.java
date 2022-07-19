@@ -26,6 +26,4 @@ public final class JwtUtils {
         return Set.of(new Role(UUID.fromString(roles.get(0).get("id")), roles.get(0).get("name")));
     }
 
-    //TODO Переписать ID на UUID
-
 }

@@ -43,8 +43,6 @@ public class GasController {
         return gasService.put(gasDto, id);
     }
 
-    //TODO Сделать удаление и получение всех visible gas
-
     /**
      * Принимаем запрос на удаление gas, по факте изменяем visible gas для пользователя
      */

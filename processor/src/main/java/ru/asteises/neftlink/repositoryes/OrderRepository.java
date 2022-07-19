@@ -11,4 +11,8 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     List<Order> findAllByVisibleTrue();
+
+    List<Order> findOrdersByCostGreaterThan(Long from);
+
+    Order findOrderByCost(Long cost);
 }
