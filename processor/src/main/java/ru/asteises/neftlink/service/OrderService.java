@@ -2,6 +2,9 @@ package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Отвечает за всю бизнес-логику связанную с Order (все что может происходить с объектами типа Order)
@@ -25,6 +29,7 @@ public class OrderService {
     private final UserService userService;
     private final GasService gasService;
     private final BaseService baseService;
+
 
     /**
      *Создаем объект Order из OrderDto и сохраняем в базу данных
@@ -38,6 +43,7 @@ public class OrderService {
     /**
      * Находим объект Order по ID, меняем цену и время обновления
      */
+    //TODO Методы AuthService для получения текущего пользователя
     public ResponseEntity<String> put(UUID orderId, Long price, UUID userId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
@@ -77,20 +83,23 @@ public class OrderService {
     /**
      * Достаем все order
      */
-    public ResponseEntity<List<Order>> getVisibleOrders() {
-        List<Order> orders = orderRepository.findAllByVisibleTrue(Sort.by("updateDate").descending());
-        return ResponseEntity.ok(orders);
-    }
-
-//    public ResponseEntity<Page<Order>> getVisibleOrders() {
-//        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
-//        Page<Order> orders = orderRepository.findAllByVisibleTrue(firstPageWithTwoElements);
+//    public ResponseEntity<List<Order>> getVisibleOrders() {
+//        List<Order> orders = orderRepository.findAllByVisibleTrue(Sort.by("updateDate").descending());
 //        return ResponseEntity.ok(orders);
 //    }
 
-    public ResponseEntity<List<Order>> getOrdersByCost(Long from, Long to) {
-        List<Order> orders = orderRepository.findAllByCostBetween(from, to);
+    public ResponseEntity<Page<Order>> getVisibleOrders() {
+        Pageable firstPageWithTwoElements = PageRequest.of(0, 2, Sort.by("updateDate").descending());
+        Page<Order> orders = orderRepository.findAllByVisibleTrue(firstPageWithTwoElements);
         return ResponseEntity.ok(orders);
+    }
+
+    public ResponseEntity<List<OrderDto>> getOrdersByCost(Long from, Long to) {
+        List<Order> orders = orderRepository.findAllByCostBetweenAndVisibleIsTrue(from, to);
+        List<OrderDto> orderDtos = orders.stream()
+                .map(order -> OrderMapper.INSTANCE.toDto(order))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(orderDtos);
     }
 
     public ResponseEntity<List<Order>> getOrdersByGas(String gasType) {
@@ -107,5 +116,4 @@ public class OrderService {
         List<Order> orders = orderRepository.findAllByUserId(userId);
         return ResponseEntity.ok(orders);
     }
-
 }

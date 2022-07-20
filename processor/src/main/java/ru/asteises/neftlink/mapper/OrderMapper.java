@@ -37,5 +37,8 @@ public abstract class OrderMapper {
                                   @Context BaseService baseService);
 
     @InheritInverseConfiguration
+    @Mapping(target = "inn", source = "order.user.inn")
+    @Mapping(target = "gasType", source = "order.gas.gasType")
+    @Mapping(target = "baseName", source = "order.base.name")
     public abstract OrderDto toDto(Order order);
 }

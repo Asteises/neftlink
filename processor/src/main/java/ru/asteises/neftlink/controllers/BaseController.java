@@ -1,10 +1,12 @@
 package ru.asteises.neftlink.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
+import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.BaseService;
 
 import java.util.List;
@@ -12,13 +14,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/base")
+@RequiredArgsConstructor
 public class BaseController {
 
     private final BaseService baseService;
 
-    public BaseController(BaseService baseService) {
-        this.baseService = baseService;
-    }
+    private final AuthService authService;
 
     /**
      *Принимает запрос на создание нового объекта типа Base в базу данных с помощью Service (РАБОТАЕТ)
