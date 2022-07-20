@@ -1,5 +1,6 @@
 package ru.asteises.neftlink.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.GasDto;
@@ -33,7 +34,7 @@ public class GasService {
     }
 
     /**
-     * Пробуем заменить gas по id
+     * Пробуем заменить gasType по id
      */
     public ResponseEntity<String> put(GasDto gasDto, UUID id) {
         Optional<Gas> gasOptional = gasRepository.findById(id);
@@ -56,8 +57,9 @@ public class GasService {
     /**
      * Достаем gas по id
      */
-    public Gas getGasById(UUID id) {
-        return gasRepository.findGasById(id);
+    public ResponseEntity<Gas> getGasById(UUID id) {
+        Gas gas = gasRepository.findGasById(id);
+        return ResponseEntity.ok(gas);
     }
 
     /**
@@ -71,14 +73,14 @@ public class GasService {
             gasRepository.save(gas);
             return ResponseEntity.ok("Gas успешно удален");
         }
-        return ResponseEntity.ok("Мы не нашли подходящй gas");
+        return ResponseEntity.ok("Мы не нашли подходящий gas");
     }
 
     /**
-     * Доставем все gas
+     * Достаем все gas
      */
     public ResponseEntity<List<Gas>> getVisibleGases() {
-        List<Gas> gases = gasRepository.findAllByVisibleTrue();
+        List<Gas> gases = gasRepository.findAllByVisibleTrue(Sort.by("gasType"));
         return ResponseEntity.ok(gases);
     }
 }

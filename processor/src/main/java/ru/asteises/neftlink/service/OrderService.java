@@ -1,8 +1,7 @@
 package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,9 +36,9 @@ public class OrderService {
     }
 
     /**
-     * Находим объект Order по ID, меняем цену и время обновлекния
+     * Находим объект Order по ID, меняем цену и время обновления
      */
-    public ResponseEntity<String> put(Long price, UUID orderId, UUID userId) {
+    public ResponseEntity<String> put(UUID orderId, Long price, UUID userId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
@@ -79,10 +78,15 @@ public class OrderService {
      * Достаем все order
      */
     public ResponseEntity<List<Order>> getVisibleOrders() {
-        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
         List<Order> orders = orderRepository.findAllByVisibleTrue(Sort.by("updateDate").descending());
         return ResponseEntity.ok(orders);
     }
+
+//    public ResponseEntity<Page<Order>> getVisibleOrders() {
+//        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+//        Page<Order> orders = orderRepository.findAllByVisibleTrue(firstPageWithTwoElements);
+//        return ResponseEntity.ok(orders);
+//    }
 
     public ResponseEntity<List<Order>> getOrdersByCost(Long from, Long to) {
         List<Order> orders = orderRepository.findAllByCostBetween(from, to);

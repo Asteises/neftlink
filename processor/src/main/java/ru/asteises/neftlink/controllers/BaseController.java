@@ -21,7 +21,7 @@ public class BaseController {
     }
 
     /**
-     *Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
+     *Принимает запрос на создание нового объекта типа Base в базу данных с помощью Service (РАБОТАЕТ)
      */
     @PostMapping("/add")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
@@ -30,21 +30,32 @@ public class BaseController {
         return ResponseEntity.ok("запрос на создание нового объекта Base в базу данных успешно принят и обработан");
     }
 
+    /**
+     * Изменить существующий Base (РАБОТАЕТ)
+     */
     @PutMapping("/change/{id}")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> put(@RequestBody BaseDto baseDto, @PathVariable UUID id) {
         return baseService.put(baseDto, id);
     }
 
+    /**
+     * Сделать существующий Base visible.FALSE (РАБОТАЕТ)
+     */
     @DeleteMapping("/delete/{id}")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<String> deleteBase(@PathVariable UUID id) {
         return baseService.setVisibleFalse(id);
     }
 
+    /**
+     * Достать все Base (РАБОТАЕТ)
+     */
     @GetMapping("/")
     public ResponseEntity<List<Base>> getBases() {
         return baseService.getVisibleBases();
     }
 
+    //TODO Как найти все Base которые торгуют определенным gasType?
+    //TODO Как найти все gasType которыми торгует определенный Base?
 }

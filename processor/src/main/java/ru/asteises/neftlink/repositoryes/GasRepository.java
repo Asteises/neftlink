@@ -1,5 +1,6 @@
 package ru.asteises.neftlink.repositoryes;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.asteises.neftlink.entity.Gas;
@@ -14,5 +15,5 @@ public interface GasRepository extends JpaRepository<Gas, UUID> {
 
     Gas findGasById(UUID id);
 
-    List<Gas> findAllByVisibleTrue();
+    List<Gas> findAllByVisibleTrue(Sort sort);
 }

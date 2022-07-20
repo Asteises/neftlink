@@ -15,5 +15,4 @@ public interface BaseRepository extends JpaRepository<Base, UUID> {
     Base findBaseById(UUID id);
 
     List<Base> findAllByVisibleTrue();
-
 }

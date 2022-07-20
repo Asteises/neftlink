@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Контроллер - принимамет и отвечает на запросы
+ * Контроллер - принимает и отвечает на запросы
  */
 @RestController
 @RequestMapping("/gas")
@@ -25,7 +25,7 @@ public class GasController {
     private final AuthService authService;
 
     /**
-     * Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service
+     * Принимает запрос на создание нового объекта типа Gas в базу данных с помощью Service (РАБОТАЕТ)
      */
     @PostMapping("/add")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
@@ -35,16 +35,16 @@ public class GasController {
     }
 
     /**
-     * Принимаем запрос на замену gas по id
+     * Принимаем запрос на замену gas по id (РАБОТАЕТ)
      */
     @PutMapping("/change/{id}")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
-    public ResponseEntity<String> put(@RequestBody GasDto gasDto, UUID id) {
+    public ResponseEntity<String> put(@RequestBody GasDto gasDto, @PathVariable UUID id) {
         return gasService.put(gasDto, id);
     }
 
     /**
-     * Принимаем запрос на удаление gas, по факте изменяем visible gas для пользователя
+     * Принимаем запрос на удаление gas, по фактy изменяем visible gas для пользователя (РАБОТАЕТ)
      */
     @DeleteMapping("/delete/{id}")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
@@ -53,10 +53,19 @@ public class GasController {
     }
 
     /**
-     * Принимаем запрос на вывод всех visible gas
+     * Принимаем запрос на вывод всех visible gas (РАБОТАЕТ)
      */
     @GetMapping("/")
     public ResponseEntity<List<Gas>> getGases() {
         return gasService.getVisibleGases();
+    }
+
+    /**
+     * Достаем Gas по id (РАБОТАЕТ)
+     */
+    @GetMapping("/{id}")
+    @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
+    public ResponseEntity<Gas> getGas(@PathVariable UUID id) {
+        return gasService.getGasById(id);
     }
 }
