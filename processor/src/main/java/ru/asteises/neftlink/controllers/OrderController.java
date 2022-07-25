@@ -3,6 +3,8 @@ package ru.asteises.neftlink.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.OrderService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,14 +42,16 @@ public class OrderController {
     }
 
     /**
-     * Меняем cost в Order по id (РАБОТАЕТ)
+     * Меняем cost в Order по id (ПРОВЕРИТЬ)
      */
     @PutMapping("/change/{orderId}")
-    public ResponseEntity<String> put(@PathVariable UUID orderId,
+    @PreAuthorize(value = "@authService.authInfo.principal().equals(userRepository.findById(userId))")
+    public ResponseEntity<String> put(Principal principal,
+                                      @PathVariable UUID orderId,
                                       @RequestParam Long price,
                                       @RequestParam UUID userId
                                       ) {
-        return orderService.put(orderId, price, userId);
+        return orderService.put(principal, orderId, price, userId);
     }
 
     /**

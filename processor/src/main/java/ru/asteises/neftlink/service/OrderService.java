@@ -1,18 +1,19 @@
 package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,11 +45,14 @@ public class OrderService {
      * Находим объект Order по ID, меняем цену и время обновления
      */
     //TODO Методы AuthService для получения текущего пользователя
-    public ResponseEntity<String> put(UUID orderId, Long price, UUID userId) {
+    public ResponseEntity<String> put(Principal principal,
+                                      UUID orderId,
+                                      Long price,
+                                      UUID userId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            if (order.getUser().getId().equals(userId)) {
+            if (order.getUser().getId().equals(userId) && principal.getName().equals(order.getUser().getName())) {
                 order.setCost(price);
                 order.setUpdateDate(LocalDateTime.now());
                 orderRepository.save(order);
