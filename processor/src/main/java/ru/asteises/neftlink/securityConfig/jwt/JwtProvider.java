@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -43,7 +44,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setExpiration(accessExpiration)
-                .signWith(jwtAccessSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtAccessSecret)
                 .claim("roles", user.getRoles())
                 .claim("firstName", user.getName())
                 .compact();
@@ -56,7 +57,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setExpiration(refreshExpiration)
-                .signWith(jwtRefreshSecret)
+                .signWith(SignatureAlgorithm.ES512 ,jwtRefreshSecret)
                 .compact();
     }
 
@@ -70,9 +71,8 @@ public class JwtProvider {
 
     private boolean validateToken(@NonNull String token, @NonNull Key secret) {
         try {
-            Jwts.parserBuilder()
+            Jwts.parser()
                     .setSigningKey(secret)
-                    .build()
                     .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
@@ -98,9 +98,8 @@ public class JwtProvider {
     }
 
     private Claims getClaims(@NonNull String token, @NonNull Key secret) {
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(secret)
-                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
