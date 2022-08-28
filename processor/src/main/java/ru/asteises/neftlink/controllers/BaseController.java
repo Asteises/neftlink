@@ -57,6 +57,4 @@ public class BaseController {
         return baseService.getVisibleBases();
     }
 
-    //TODO Как найти все Base которые торгуют определенным gasType?
-    //TODO Как найти все gasType которыми торгует определенный Base?
 }

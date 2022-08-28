@@ -92,16 +92,12 @@ public class OrderService {
                 return ResponseEntity.ok("Order не принадлежит данному User");
             }
         }
-        return ResponseEntity.ok("Мы не нашли подходящй order");
+        return ResponseEntity.ok("Мы не нашли подходящий order");
     }
 
     /**
      * Достаем все order
      */
-//    public ResponseEntity<List<Order>> getVisibleOrders() {
-//        List<Order> orders = orderRepository.findAllByVisibleTrue(Sort.by("updateDate").descending());
-//        return ResponseEntity.ok(orders);
-//    }
     public ResponseEntity<Page<Order>> getVisibleOrders() {
         Pageable firstPageWithTwoElements = PageRequest.of(0, 2, Sort.by("updateDate").descending());
         Page<Order> orders = orderRepository.findAllByVisibleTrue(firstPageWithTwoElements);

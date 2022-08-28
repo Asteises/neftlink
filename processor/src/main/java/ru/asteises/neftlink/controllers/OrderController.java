@@ -105,6 +105,7 @@ public class OrderController {
         return orderService.getOrdersByUser(userId);
     }
 
+    //TODO Сделать пагинацию
     @GetMapping("/filter")
     public ResponseEntity<List<Order>> getOrdersByFilter(@RequestBody OrderFilterDto orderFilterDto) {
         return orderService.getOrdersByFilter(orderFilterDto);
