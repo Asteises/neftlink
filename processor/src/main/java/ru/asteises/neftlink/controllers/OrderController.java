@@ -19,6 +19,10 @@ import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.OrderService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
@@ -107,7 +111,10 @@ public class OrderController {
 
     //TODO Сделать пагинацию
     @GetMapping("/filter")
-    public ResponseEntity<List<Order>> getOrdersByFilter(@RequestBody OrderFilterDto orderFilterDto) {
-        return orderService.getOrdersByFilter(orderFilterDto);
+    public ResponseEntity<List<Order>> getOrdersByFilter(
+            @RequestBody OrderFilterDto orderFilterDto,
+            @RequestParam(defaultValue = "5") @Min(1) @Max(100) int elements,
+            @RequestParam(defaultValue = "0") @Min(0) int shift) {
+        return ResponseEntity.ok(or.getOrdersByFilter(orderFilterDto, elements, shift));
     }
 }

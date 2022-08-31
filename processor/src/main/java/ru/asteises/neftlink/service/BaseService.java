@@ -4,9 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
-import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.BaseMapper;
-import ru.asteises.neftlink.mapper.GasMapper;
 import ru.asteises.neftlink.repositoryes.BaseRepository;
 
 import java.util.List;

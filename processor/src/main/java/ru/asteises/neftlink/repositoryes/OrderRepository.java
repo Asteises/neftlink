@@ -3,17 +3,15 @@ package ru.asteises.neftlink.repositoryes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.asteises.neftlink.dto.OrderFilterDto;
 import ru.asteises.neftlink.entity.Order;
 
-import javax.persistence.NamedQuery;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, UUID> {
+public interface OrderRepository extends JpaRepository<Order, UUID>, FindOrderByFilter {
 
 //    List<Order> findAllByVisibleTrue(Sort sort);
 
@@ -27,7 +25,6 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     List<Order> findAllByUserId(UUID userId);
 
-    @Query("SELECT * FROM Order WHERE cost = ?")
-    Page<Order> findAllByCostBetweenAndGasAndBaseAndUser(OrderFilterDto orderFilterDto);
+    Page<Order> findAllByBase(OrderFilterDto orderFilterDto, Pageable pageable);
 
 }
