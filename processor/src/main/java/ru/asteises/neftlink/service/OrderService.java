@@ -8,6 +8,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
+import ru.asteises.neftlink.dto.OrderFilterDto;
+import ru.asteises.neftlink.dto.PageInfo;
+import ru.asteises.neftlink.dto.PageResponse;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
@@ -94,7 +97,7 @@ public class OrderService {
     public ResponseEntity<List<OrderDto>> getOrdersByCost(Long from, Long to) {
         List<Order> orders = orderRepository.findAllByCostBetweenAndVisibleIsTrue(from, to);
         List<OrderDto> orderDtos = orders.stream()
-                .map(order -> OrderMapper.INSTANCE.toDto(order))
+                .map(OrderMapper.INSTANCE::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(orderDtos);
     }
@@ -112,6 +115,15 @@ public class OrderService {
     public ResponseEntity<List<Order>> getOrdersByUser(UUID userId) {
         List<Order> orders = orderRepository.findAllByUserId(userId);
         return ResponseEntity.ok(orders);
+    }
+
+    public ResponseEntity<PageResponse> getOrdersByFilter(OrderFilterDto orderFilterDto, int elements, int shift) {
+        List<Order> orders = orderRepository.getOrdersByFilter(orderFilterDto, elements, shift);
+        PageResponse pageResponse = new PageResponse();
+        Long ordersCount = orderRepository.countByFilter(orderFilterDto);
+        pageResponse.setOrderList(orders);
+        pageResponse.setPageInfo(new PageInfo(elements, shift, ordersCount, orders.size()));
+        return ResponseEntity.ok(pageResponse);
     }
 
     //TODO Как создавать кастомные методы в репозитории, когда сущность состоит из нескольких других сущностей

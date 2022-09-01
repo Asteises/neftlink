@@ -4,14 +4,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.asteises.neftlink.dto.OrderFilterDto;
 import ru.asteises.neftlink.entity.Order;
 
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, UUID>, FindOrderByFilter {
+public interface OrderRepository extends JpaRepository<Order, UUID>, OrderRepositoryCustom {
 
 //    List<Order> findAllByVisibleTrue(Sort sort);
 
@@ -24,7 +23,5 @@ public interface OrderRepository extends JpaRepository<Order, UUID>, FindOrderBy
     List<Order> findAllByBaseName(String baseName);
 
     List<Order> findAllByUserId(UUID userId);
-
-    Page<Order> findAllByBase(OrderFilterDto orderFilterDto, Pageable pageable);
 
 }

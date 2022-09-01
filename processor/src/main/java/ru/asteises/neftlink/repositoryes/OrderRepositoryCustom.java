@@ -5,7 +5,7 @@ import ru.asteises.neftlink.entity.Order;
 
 import java.util.List;
 
-public interface FindOrderByFilter {
+public interface OrderRepositoryCustom {
 
     List<Order> getOrdersByFilter(OrderFilterDto orderFilterDto, int elements, int shift);
 
