@@ -117,11 +117,11 @@ public class OrderService {
         return ResponseEntity.ok(orders);
     }
 
-    public ResponseEntity<PageResponse> getOrdersByFilter(OrderFilterDto orderFilterDto, int elements, int shift) {
+    public ResponseEntity<PageResponse<Order>> getOrdersByFilter(OrderFilterDto orderFilterDto, int elements, int shift) {
         List<Order> orders = orderRepository.getOrdersByFilter(orderFilterDto, elements, shift);
-        PageResponse pageResponse = new PageResponse();
-        Long ordersCount = orderRepository.countByFilter(orderFilterDto);
-        pageResponse.setOrderList(orders);
+        PageResponse<Order> pageResponse = new PageResponse<>();
+        long ordersCount = orderRepository.countByFilter(orderFilterDto);
+        pageResponse.setValues(orders);
         pageResponse.setPageInfo(new PageInfo(elements, shift, ordersCount, orders.size()));
         return ResponseEntity.ok(pageResponse);
     }

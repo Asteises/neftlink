@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.asteises.neftlink.dto.OrderFilterDto;
 import ru.asteises.neftlink.entity.Order;
+import ru.asteises.neftlink.enums.SortEnum;
 import ru.asteises.neftlink.repositoryes.OrderRepositoryCustom;
 
 import javax.persistence.EntityManager;
@@ -46,9 +47,19 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         // WHERE BASE = ? AND BETWEEN ? AND ?
         query.where(orderPredicate);
         // SELECT * FROM order WHERE BASE = ? ...
+        /*
+            Важно! При сравнении константы с объектом всегда вызываем метод equals() у константы, а не у значения!
+         */
+        if (orderFilterDto.getOrderSortEnum().getText() != null) { // Если пришел null, то сортировку не делаем;
+            if (SortEnum.ASC.equals(orderFilterDto.getSortEnum())) {
+                query.orderBy(cb.asc(order.get(orderFilterDto.getOrderSortEnum().getText()))); // Сортировка для JPA;
+            } else {
+                query.orderBy(cb.desc(order.get(orderFilterDto.getOrderSortEnum().getText()))); // Сортировка для JPA;
+            }
+        }
         TypedQuery<Order> typedQuery = entityManager.createQuery(query); // Получившийся запрос;
         typedQuery.setFirstResult(elements * shift); // firstResult() - откуда начинается результат;
-        typedQuery.setMaxResults(elements); // Максимальное количество результатов;
+        typedQuery.setMaxResults(elements); // maxResults() - максимальное количество результатов;
         return typedQuery.getResultList(); // Получение результата выполнения этого запроса;
     }
     /*

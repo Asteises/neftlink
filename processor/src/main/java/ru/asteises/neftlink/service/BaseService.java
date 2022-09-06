@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.BaseDto;
 import ru.asteises.neftlink.entity.Base;
+import ru.asteises.neftlink.handler.exception.BaseNotFound;
 import ru.asteises.neftlink.mapper.BaseMapper;
 import ru.asteises.neftlink.repositoryes.BaseRepository;
 
@@ -25,37 +26,41 @@ public class BaseService {
     /**
      * Создаем объект Base из BaseDto и сохраняем в базу данных
      */
-    public String add(BaseDto baseDto) {
-        baseRepository.save(BaseMapper.INSTANCE.toBase(baseDto));
-        return "базис успешно добавлен в репозиторий";
+    public Base add(BaseDto baseDto) {
+        return baseRepository.save(BaseMapper.INSTANCE.toBase(baseDto));
     }
 
     /**
      * Пробуем заменить base по id
      */
-    public ResponseEntity<String> put(BaseDto baseDto, UUID id) {
+    public ResponseEntity<String> put(BaseDto baseDto, UUID id) throws BaseNotFound {
         Optional<Base> baseOptional = baseRepository.findById(id);
         if (baseOptional.isPresent()) {
             Base base = baseOptional.get();
             base.setName(baseDto.getName());
             base.setAddress(baseDto.getAddress());
             baseRepository.save(base);
-            return ResponseEntity.ok("Base успещно обновлен");
+            return ResponseEntity.ok("Base успешно обновлен");
         }
-        return ResponseEntity.ok("Мы не нашли подходязий Base");
+        throw new BaseNotFound(String.format("Base with %s id not found", id));
+
     }
 
     /**
      *Ищем в репозитории объект Base по указанному baseName
      */
     public Base getBaseByName(String baseName) {
-        return baseRepository.findBaseByName(baseName);
+        return baseRepository.findBaseByName(baseName)
+                .orElseThrow(() -> new BaseNotFound(String.format("Base with %s name not found", baseName)));
     }
 
     public Base getBaseById(UUID baseId) {
         return baseRepository.findBaseById(baseId);
     }
 
+    /**
+     * Чтобы не удалять из БД, меняем значение видимости.
+     */
     public ResponseEntity<String> setVisibleFalse(UUID id) {
         Optional<Base> baseOptional = baseRepository.findById(id);
         if (baseOptional.isPresent()) {
