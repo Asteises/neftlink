@@ -8,9 +8,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.OrderDto;
+import ru.asteises.neftlink.dto.OrderFilterDto;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
+import ru.asteises.neftlink.securityConfig.jwt.JwtAuthentication;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -29,12 +31,14 @@ public class OrderService {
     private final UserService userService;
     private final GasService gasService;
     private final BaseService baseService;
+    private JwtAuthentication jwtAuthentication;
+    private FindOrderByFilterImpl findOrderByFilter;
 
     /**
      * Создаем объект Order из OrderDto и сохраняем в базу данных
      */
     public String add(OrderDto orderDto) {
-        Order order = OrderMapper.INSTANCE.toOrder(orderDto, userService, gasService, baseService);
+        Order order = OrderMapper.INSTANCE.toOrder(orderDto, userService, gasService, baseService, jwtAuthentication);
         orderRepository.save(order);
         return "заказ успешно добавлен в репозиторий";
     }
@@ -94,7 +98,7 @@ public class OrderService {
     public ResponseEntity<List<OrderDto>> getOrdersByCost(Long from, Long to) {
         List<Order> orders = orderRepository.findAllByCostBetweenAndVisibleIsTrue(from, to);
         List<OrderDto> orderDtos = orders.stream()
-                .map(order -> OrderMapper.INSTANCE.toDto(order))
+                .map(OrderMapper.INSTANCE::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(orderDtos);
     }
@@ -114,6 +118,8 @@ public class OrderService {
         return ResponseEntity.ok(orders);
     }
 
-    //TODO Как создавать кастомные методы в репозитории, когда сущность состоит из нескольких других сущностей
-
+    public ResponseEntity<List<Order>> getOrdersByFilter(OrderFilterDto orderFilterDto, int elements, int shift) {
+        List<Order> orders = findOrderByFilter.getOrdersByFilter(orderFilterDto, elements, shift);
+        return ResponseEntity.ok(orders);
+    }
 }

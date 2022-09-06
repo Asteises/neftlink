@@ -24,7 +24,7 @@ public class FindOrderByFilterImpl implements FindOrderByFilter {
 
     @Lazy
     private final OrderRepository orderRepository;
-    @PersistenceContext //Для работы с БД и автоматического подтягивания Context из Spring
+    @PersistenceContext //Для работы с БД и автоматического подтягивания Context из Spring;
     private EntityManager entityManager;
 
     /**
