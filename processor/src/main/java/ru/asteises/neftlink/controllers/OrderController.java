@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.asteises.neftlink.dto.OrderDto;
 import ru.asteises.neftlink.dto.OrderFilterDto;
+import ru.asteises.neftlink.dto.PageResponse;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.service.AuthService;
 import ru.asteises.neftlink.service.OrderService;
@@ -101,7 +102,7 @@ public class OrderController {
 
     //TODO Сделать пагинацию
     @GetMapping("/filter")
-    public ResponseEntity<List<Order>> getOrdersByFilter(
+    public ResponseEntity<PageResponse> getOrdersByFilter(
             @RequestBody OrderFilterDto orderFilterDto,
             @RequestParam(defaultValue = "5") @Min(1) @Max(100) int elements,
             @RequestParam(defaultValue = "0") @Min(0) int shift) {
