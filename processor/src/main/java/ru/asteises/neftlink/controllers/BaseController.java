@@ -26,9 +26,8 @@ public class BaseController {
      */
     @PostMapping("/add")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
-    public ResponseEntity<String> add(@RequestBody BaseDto baseDto) {
-        baseService.add(baseDto);
-        return ResponseEntity.ok("запрос на создание нового объекта Base в базу данных успешно принят и обработан");
+    public ResponseEntity<Base> add(@RequestBody BaseDto baseDto) {
+        return ResponseEntity.ok(baseService.add(baseDto));
     }
 
     /**

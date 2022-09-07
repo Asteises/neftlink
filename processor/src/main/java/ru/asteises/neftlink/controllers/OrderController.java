@@ -102,7 +102,7 @@ public class OrderController {
 
     //TODO Сделать пагинацию
     @GetMapping("/filter")
-    public ResponseEntity<PageResponse> getOrdersByFilter(
+    public ResponseEntity<PageResponse<Order>> getOrdersByFilter(
             @RequestBody OrderFilterDto orderFilterDto,
             @RequestParam(defaultValue = "5") @Min(1) @Max(100) int elements,
             @RequestParam(defaultValue = "0") @Min(0) int shift) {

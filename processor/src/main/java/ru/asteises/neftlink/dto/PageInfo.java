@@ -17,6 +17,9 @@ public class PageInfo {
         this.elements = elements;
         this.shift = shift;
         this.pages = elementsCount / elements;
+        if (elementsCount % elements != 0) {
+            pages++;
+        }
         this.elementsCount = elementsCount;
         this.currentSize = currentSize;
     }

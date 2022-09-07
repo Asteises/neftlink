@@ -2,15 +2,14 @@ package ru.asteises.neftlink.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.asteises.neftlink.entity.Order;
 
 import java.util.List;
 
 @Getter
 @Setter
-public class PageResponse {
+public class PageResponse<T> {
 
-    private List<Order> orderList;
+    private List<T> values;
     private PageInfo pageInfo;
 
 }
