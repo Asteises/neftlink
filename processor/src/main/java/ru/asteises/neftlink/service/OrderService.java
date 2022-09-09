@@ -14,6 +14,7 @@ import ru.asteises.neftlink.dto.PageResponse;
 import ru.asteises.neftlink.entity.Order;
 import ru.asteises.neftlink.mapper.OrderMapper;
 import ru.asteises.neftlink.repositoryes.OrderRepository;
+import ru.asteises.neftlink.securityConfig.jwt.JwtAuthentication;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -32,12 +33,13 @@ public class OrderService {
     private final UserService userService;
     private final GasService gasService;
     private final BaseService baseService;
+    private final AuthService authService;
 
     /**
      * Создаем объект Order из OrderDto и сохраняем в базу данных
      */
     public String add(OrderDto orderDto) {
-        Order order = OrderMapper.INSTANCE.toOrder(orderDto, userService, gasService, baseService);
+        Order order = OrderMapper.INSTANCE.toOrder(orderDto, userService, gasService, baseService, authService.getAuthInfo());
         orderRepository.save(order);
         return "заказ успешно добавлен в репозиторий";
     }
