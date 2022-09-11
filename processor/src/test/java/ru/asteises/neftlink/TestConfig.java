@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "ru.asteises.neftlink.repositoryes")
-@PropertySource("classpath:application-test.yaml")
+@PropertySource("classpath:application.yaml")
 @EnableTransactionManagement
 public class TestConfig {
 }

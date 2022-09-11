@@ -37,7 +37,7 @@
         <column name="is_visible" type="boolean"/>
     </createTable>
 
-    <createTable tableName="order">
+    <createTable tableName="orders">
         <column name="id" type="UUID">
         <constraints primaryKey="true" nullable="false"/>
         </column>
