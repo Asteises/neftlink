@@ -63,6 +63,7 @@ public class GasController {
     /**
      * Достаем Gas по id (РАБОТАЕТ)
      */
+    //TODO Проверить чтобы все контроллеры возвращали Dto
     @GetMapping("/{id}")
     @PreAuthorize(value = "@authService.authInfo.hasRole('ADMIN')")
     public ResponseEntity<Gas> getGas(@PathVariable UUID id) {

@@ -12,9 +12,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -94,6 +96,19 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                                          CriteriaBuilder cb,
                                          Root<Order> order) {
         List<Predicate> predicates = new ArrayList<>();
+
+        // ids
+        if (orderFilterDto.getIds() != null) {
+            // Берём список всех айдишников, среди которых должен быть искомый айдишник
+            //
+            List<Long> ids = Arrays.asList(orderFilterDto.getIds());
+
+            Expression<Long> gasOrderId = order.get("gas").get("id");
+            Predicate predicateIn = gasOrderId.in(ids);
+            predicates.add(predicateIn);
+        }
+
+
         if (orderFilterDto.getBaseName() != null) {
             // BASE = ?
             Predicate baseNamePredicate = cb.equal(order.get("base").get("name"), orderFilterDto.getBaseName());

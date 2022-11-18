@@ -1,5 +1,6 @@
 package ru.asteises.neftlink.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "orders")
+@AllArgsConstructor
 public class Order {
 
     @Id

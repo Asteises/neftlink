@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * Эти тесты не поднимают БД, можно не обращаться к дополнительным сервисам,
+ * вместо этого мы заставляем вернуть нужные нам значения
+ *
  * Два способа запустить Mockito: с помощью аннотации @RunWith(MockitoJUnitRunner.class),
  *
  * или через метод @Rule MockitoRule mockitoRule = MockitoJUnit.rule();
