@@ -26,6 +26,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     @PersistenceContext // Для корректного открытия и закрытия EntityManager;
     private EntityManager entityManager;
 
+
     /**
      * Для пагинации необходимо: размер страницы, сдвиг, общее число элементов и общее число страниц.
      *
@@ -39,8 +40,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Order> query = cb.createQuery(Order.class);
+
         // Что-то вроде RawMapper, то что позволяет работать с объектами определенных классов;
         Root<Order> order = query.from(Order.class);
+
         // Создаем список куда будем складывать предикаты;
         List<Predicate> predicates = getPredicates(orderFilterDto, cb, order);
         // BASE = ? AND BETWEEN ? AND ?
@@ -49,6 +52,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         // WHERE BASE = ? AND BETWEEN ? AND ?
         query.where(orderPredicate);
         // SELECT * FROM order WHERE BASE = ? ...
+
         /*
             Важно! При сравнении константы с объектом всегда вызываем метод equals() у константы, а не у значения!
          */
@@ -74,21 +78,29 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     public long countByFilter(OrderFilterDto orderFilterDto) {
         // Менеджер предикатов;
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
         // Какой объект мы хотим получить в результате обработки запроса;
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
+
         // Что-то вроде RowMapper, то что позволяет работать с объектами определенных классов;
         Root<Order> order = query.from(Order.class);
+
         // Создаем лист предикатов используя метод getPredicates();
         List<Predicate> predicates = getPredicates(orderFilterDto, cb, order);
+
         // SELECT COUNT(*)
         query.select(cb.count(order));
+
         // BASE = ? AND BETWEEN ? AND ?
         // .and - проставляем между всеми значениями AND;
         Predicate orderPredicate = cb.and(predicates.toArray(new Predicate[0]));
+
         // WHERE BASE = ? AND BETWEEN ? AND ?
         query.where(orderPredicate);
+
         // SELECT COUNT(*) FROM order WHERE BASE = ? ...
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+
         return typedQuery.getSingleResult();
     }
 
@@ -107,7 +119,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
             Predicate predicateIn = gasOrderId.in(ids);
             predicates.add(predicateIn);
         }
-
 
         if (orderFilterDto.getBaseName() != null) {
             // BASE = ?

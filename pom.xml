@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>user-client</module>
         <module>processor</module>
         <module>liquibase-migrations</module>
     </modules>

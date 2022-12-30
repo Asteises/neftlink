@@ -20,6 +20,7 @@ public abstract class GasMapper {
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "visible", expression = "java(Boolean.TRUE)")
     public abstract Gas toGas(GasDto gasDto);
+
     @InheritInverseConfiguration
     public abstract GasDto toDto(Gas gas);
 }
