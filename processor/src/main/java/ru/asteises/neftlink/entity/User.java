@@ -3,34 +3,34 @@ package ru.asteises.neftlink.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Основная сущность;
+ */
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "inn", unique = true, nullable = false)
     private Integer inn;
@@ -47,7 +47,7 @@ public class Users {
     @Column(name = "name")
     private String name;
 
-    /*
+    /**
     Для связи один к одному в обоих классах, к соответствующим полям добавляется аннотация @OneToOne. Параметр optional
     говорит JPA, является ли значение в этом поле обязательным или нет. Связанное поле в User объявлено с помощью
     аннотации @JoinColumn, параметр name которой обозначает поле в БД для создания связи.
@@ -60,20 +60,32 @@ public class Users {
 
     Связь в БД между таблицами users и orders осуществляется посредством поля orderId в таблице users.
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Set<Order> orderList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles;
 
     public void addRole(Role role) {
         roles.add(role);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

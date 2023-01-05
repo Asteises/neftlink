@@ -1,29 +1,48 @@
 package ru.asteises.neftlink.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.asteises.neftlink.entity.Users;
-import ru.asteises.neftlink.repositoryes.UserRepository;
+import ru.asteises.neftlink.dto.UserDto;
+import ru.asteises.neftlink.securityConfig.jwt.JwtRequest;
+import ru.asteises.neftlink.securityConfig.jwt.JwtResponse;
+import ru.asteises.neftlink.service.AuthService;
+import ru.asteises.neftlink.service.UserService;
 
-import java.util.List;
+import javax.security.auth.message.AuthException;
+import java.util.UUID;
 
-/*
+/**
 REST определяет стиль взаимодействия (обмена данными) между разными компонентами системы. Аннотация @RestController
 в Spring MVC – это не что иное, как сочетание аннотации @Controller и @ResponseBody.
  */
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final AuthService authService;
+
+
+    /**
+     *Принимает запрос на создание нового объекта типа User в базу данных с помощью Service
+     */
+    @PostMapping("/registration")
+    public ResponseEntity<JwtResponse> registration(@RequestBody UserDto userDto) throws AuthException {
+        userService.registration(userDto);
+        JwtRequest jwtRequest = new JwtRequest(userDto.getEmail(), userDto.getPassword());
+        return ResponseEntity.ok(authService.login(jwtRequest));
     }
 
-    @GetMapping("/user/all")
-    public List<Users> allUsers() {
-        return userRepository.findAll();
+    @PutMapping("/change/{id}")
+    public ResponseEntity<String> put(@RequestBody UserDto userDto, @PathVariable UUID id) {
+        return userService.put(userDto, id);
     }
 }
