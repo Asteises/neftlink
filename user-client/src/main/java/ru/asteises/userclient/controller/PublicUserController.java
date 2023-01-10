@@ -4,14 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.asteises.userclient.dto.RegistrationDto;
+import ru.asteises.userclient.dto.RegistrationViewDto;
+import ru.asteises.userclient.service.UserPublicService;
 
 /**
  * Действия пользователей без авторизации.
  * <p>
- * 1. Регистрация. Любой пользователь может пройти процедуру регистрации, выбрав при этом собственную роль в приложении.
- * Так как ролей пользователей будет несколько, то и форма регистрации будет отличаться.
- * Например, у ООО и ИП разные типы уставных документов и разные значения некоторых полей.
- * При этом, основные регистрационные данные могут быть одинаковыми.
+ * 1. Регистрация. Любой пользователь может пройти процедуру регистрации.
+ * Первоначальная регистрация, это регистрация именно Мастер-аккаунта для управления всем приложением.
+ * <p>
  * <p>
  * 2. Просмотр главной страницы.
  */
@@ -20,17 +21,18 @@ import ru.asteises.userclient.dto.RegistrationDto;
 @RequestMapping("/")
 public class PublicUserController {
 
+    private UserPublicService userPublicService;
+
     /**
-     * Метод регистрации всех типов пользователей.
+     * Метод для регистрации Мастер-аккаунта пользователя.
      *
-     * @param registrationDto Принимаем нужное DTO для регистрации #{@link RegistrationDto} в зависимости от типа пользователя;
-     * @return Возвращаем ...;
+     * @param registrationDto #{@link RegistrationDto}
+     * @return RegistrationViewDto #{@link RegistrationViewDto}
      */
     @PostMapping("/registration")
-    public <T> ResponseEntity<Object> userRegistration(@RequestParam String role,
-                                                  @RequestBody T registrationDto) {
+    public ResponseEntity<RegistrationViewDto> userRegistration(@RequestBody RegistrationDto registrationDto) {
 
-        return userProducer.userRegistration(roleId, registrationDto);
+        return userPublicService.userRegistration(registrationDto);
     }
 
     // TODO Что нужно возвращать при запросе главной страницы ИМ?
