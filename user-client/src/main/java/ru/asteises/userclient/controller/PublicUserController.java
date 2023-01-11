@@ -3,7 +3,7 @@ package ru.asteises.userclient.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.asteises.userclient.dto.RegistrationDto;
+import ru.asteises.userclient.dto.UserDto;
 import ru.asteises.userclient.dto.RegistrationViewDto;
 import ru.asteises.userclient.service.UserPublicService;
 
@@ -26,13 +26,13 @@ public class PublicUserController {
     /**
      * Метод для регистрации Мастер-аккаунта пользователя.
      *
-     * @param registrationDto #{@link RegistrationDto}
+     * @param userDto #{@link UserDto}
      * @return RegistrationViewDto #{@link RegistrationViewDto}
      */
     @PostMapping("/registration")
-    public ResponseEntity<RegistrationViewDto> userRegistration(@RequestBody RegistrationDto registrationDto) {
+    public ResponseEntity<RegistrationViewDto> userRegistration(@RequestBody UserDto userDto) {
 
-        return userPublicService.userRegistration(registrationDto);
+        return userPublicService.userRegistration(userDto);
     }
 
     // TODO Что нужно возвращать при запросе главной страницы ИМ?

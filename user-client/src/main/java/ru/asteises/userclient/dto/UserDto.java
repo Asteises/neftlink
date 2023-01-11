@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
  */
 @Getter
 @Setter
-public abstract class RegistrationDto {
+public class UserDto {
 
     @NotNull(message = "surname is required")
     @NotBlank(message = "surname is required")
@@ -38,6 +38,12 @@ public abstract class RegistrationDto {
     @Max(value = 100, message = "email must be 100 characters maximum")
     private Email email;
 
+    @NotNull(message = "inn is required")
+    @NotBlank(message = "inn is required")
+    @Min(value = 12, message = "inn must be 12 characters minimum")
+    @Max(value = 12, message = "inn must be 12 characters minimum")
+    private String inn;
+
     @NotNull(message = "password is required")
     @NotBlank(message = "password is required")
     @Min(value = 6, message = "password must be 6 characters minimum")
@@ -45,10 +51,4 @@ public abstract class RegistrationDto {
     private String password;
 
     //TODO Как сделать проверку введенного пароля?
-
-    @NotNull(message = "passwordRepeat is required")
-    @NotBlank(message = "passwordRepeat is required")
-    @Min(value = 6, message = "password must be 6 characters minimum")
-    @Max(value = 50, message = "password must be 50 characters minimum")
-    private String passwordRepeat;
 }

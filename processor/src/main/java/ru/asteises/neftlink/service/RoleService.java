@@ -12,7 +12,7 @@ import ru.asteises.neftlink.repositoryes.RoleRepository;
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
-    private RoleMapper roleMapper;
+    private final RoleMapper roleMapper;
 
     public RoleService(RoleRepository roleRepository, RoleMapper roleMapper) {
         this.roleRepository = roleRepository;

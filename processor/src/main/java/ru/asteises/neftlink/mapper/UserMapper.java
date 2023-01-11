@@ -24,6 +24,7 @@ public abstract class UserMapper {
 
     public static final UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+    //TODO Простые поля, вроде String, преобразуются самостоятельно, без дополнительного кода?
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "password", expression = "java(encoder.encode(userDto.getPassword()))")
     @Mapping(target = "roles", expression = "java(Collections.singletonList(roleService.getRoleUser()))")

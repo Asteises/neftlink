@@ -1,8 +1,10 @@
 package ru.asteises.neftlink.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import ru.asteises.neftlink.dto.UserChangeDto;
 import ru.asteises.neftlink.dto.UserDto;
 import ru.asteises.neftlink.entity.User;
 import ru.asteises.neftlink.mapper.UserMapper;
@@ -14,6 +16,7 @@ import java.util.UUID;
 /**
  * Отвечает за всю бизнес-логику связанную с User (все что может происходить с объектами типа User)
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -21,7 +24,7 @@ public class UserService {
     private final RoleService roleService;
 
     /**
-     *Создаем объект User из UserDto и сохраняем в базу данных
+     * Создаем объект User из UserDto и сохраняем в базу данных
      */
     public String registration(UserDto userDto) {
         userRepository.save(UserMapper.INSTANCE.toUser(userDto, roleService));
@@ -31,26 +34,42 @@ public class UserService {
     /**
      * Находим объект User по ID, меняем его и сохраняем обратно
      */
-    public ResponseEntity<String> put(UserDto userDto, UUID id) {
+    public ResponseEntity<String> put(UserChangeDto userChangeDto, UUID id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setName(userDto.getName());
-            user.setInn(userDto.getInn());
-            user.setCompany(userDto.getCompany());
-            user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
+            if (userChangeDto.getSurname() != null && !userChangeDto.getSurname().equals("")) {
+                user.setSurname(userChangeDto.getSurname());
+            }
+            if (userChangeDto.getFirstname() != null && !userChangeDto.getFirstname().equals("")) {
+                user.setFirstname(userChangeDto.getFirstname());
+            }
+            if (userChangeDto.getLastname() != null && !userChangeDto.getLastname().equals("")) {
+                user.setLastname(userChangeDto.getLastname());
+            }
+            if (userChangeDto.getEmail() != null && !userChangeDto.getEmail().toString().equals("")) {
+                user.setEmail(userChangeDto.getEmail().toString());
+            }
+            if (userChangeDto.getPhone() != null) {
+                user.setPhone(userChangeDto.getPhone());
+            }
+            if (userChangeDto.getInn() != null) {
+                user.setInn(userChangeDto.getInn());
+            }
+            if (userChangeDto.getPassword() != null && !userChangeDto.getPassword().equals("")) {
+                user.setPassword(userChangeDto.getPassword());
+            }
             userRepository.save(user);
             return ResponseEntity.ok("User успешно обновлен");
         }
         return ResponseEntity.ok("Мы не нашли подходящего User");
     }
 
-    public User getUserByInn(int inn) {
-        return userRepository.findUserByInn(inn);
+    public Optional<User> getUserByInn(int inn) {
+        return userRepository.findUserByInn(inn).orElseThrow();
     }
 
     public Optional<User> getByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow();
     }
 }

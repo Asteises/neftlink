@@ -9,7 +9,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.asteises.userclient.dto.RegistrationDto;
+import ru.asteises.userclient.dto.UserDto;
 import ru.asteises.userclient.dto.RegistrationViewDto;
 
 import java.util.List;
@@ -38,11 +38,11 @@ public class ProcessorClient {
      * Метод для передачи регистрационных данных в Processor.
      *
      * @param patch Путь
-     * @param registrationDto #{@link RegistrationDto}
+     * @param userDto #{@link UserDto}
      * @return RegistrationViewDto #{@link RegistrationViewDto}
      */
-    public ResponseEntity<RegistrationViewDto> sendRegistrationData(String patch, RegistrationDto registrationDto) {
-        HttpEntity<RegistrationDto> requestEntity = new HttpEntity<>(registrationDto, defaultHeaders());
+    public ResponseEntity<RegistrationViewDto> sendRegistrationData(String patch, UserDto userDto) {
+        HttpEntity<UserDto> requestEntity = new HttpEntity<>(userDto, defaultHeaders());
         return restTemplate.exchange(patch, HttpMethod.POST, requestEntity, RegistrationViewDto.class);
     }
 

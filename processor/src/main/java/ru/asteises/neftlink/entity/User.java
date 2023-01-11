@@ -41,11 +41,20 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "phone", unique = true, nullable = false)
+    private String phone;
+
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "surname", nullable = false)
+    private String surname;
+
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
+
+    @Column(name = "lastname", nullable = false)
+    private String lastname;
 
     /**
     Для связи один к одному в обоих классах, к соответствующим полям добавляется аннотация @OneToOne. Параметр optional

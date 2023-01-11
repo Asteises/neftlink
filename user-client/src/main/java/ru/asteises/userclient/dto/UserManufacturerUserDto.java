@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class UserManufacturerRegistrationDto extends RegistrationDto {
+public class UserManufacturerUserDto extends UserDto {
 
     @NotNull(message = "inn is required")
     @Min(value = 10, message = "inn need 10 numbers")
