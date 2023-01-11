@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.asteises.neftlink.dto.UserChangeDto;
 import ru.asteises.neftlink.dto.UserDto;
 import ru.asteises.neftlink.entity.User;
+import ru.asteises.neftlink.handler.exception.UserNotFound;
 import ru.asteises.neftlink.mapper.UserMapper;
 import ru.asteises.neftlink.repositoryes.UserRepository;
 
@@ -47,8 +48,8 @@ public class UserService {
             if (userChangeDto.getLastname() != null && !userChangeDto.getLastname().equals("")) {
                 user.setLastname(userChangeDto.getLastname());
             }
-            if (userChangeDto.getEmail() != null && !userChangeDto.getEmail().toString().equals("")) {
-                user.setEmail(userChangeDto.getEmail().toString());
+            if (userChangeDto.getEmail() != null && !userChangeDto.getEmail().equals("")) {
+                user.setEmail(userChangeDto.getEmail());
             }
             if (userChangeDto.getPhone() != null) {
                 user.setPhone(userChangeDto.getPhone());
@@ -65,11 +66,15 @@ public class UserService {
         return ResponseEntity.ok("Мы не нашли подходящего User");
     }
 
-    public Optional<User> getUserByInn(int inn) {
-        return userRepository.findUserByInn(inn).orElseThrow();
+    public User getUserByInn(int inn) {
+        return userRepository.findUserByInn(inn).orElseThrow(() -> new UserNotFound(String.format("User by inn= %s not found", inn)));
     }
 
-    public Optional<User> getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow();
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFound(String.format("User by email= %s not found", email)));
+    }
+
+    public User getUserByPhone(String phone) {
+        return userRepository.findByPhone(phone).orElseThrow(() -> new UserNotFound(String.format("User by phone= %s not found", phone)));
     }
 }

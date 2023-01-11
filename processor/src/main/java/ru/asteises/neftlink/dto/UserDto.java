@@ -38,7 +38,7 @@ public class UserDto {
     @NotNull(message = "email is required")
     @NotBlank(message = "email is required")
     @Max(value = 100, message = "email must be 100 characters maximum")
-    private Email email;
+    private String email;
 
     @NotNull(message = "inn is required")
     @NotBlank(message = "inn is required")

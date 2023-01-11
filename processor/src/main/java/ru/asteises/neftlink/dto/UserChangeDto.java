@@ -29,7 +29,7 @@ public class UserChangeDto {
 
     //TODO При изменении имейл потребуется ввести код из письма с нового имейл;
     @Max(value = 100, message = "email must be 100 characters maximum")
-    private Email email;
+    private String email;
 
     @Min(value = 12, message = "inn must be 12 characters minimum")
     @Max(value = 12, message = "inn must be 12 characters minimum")

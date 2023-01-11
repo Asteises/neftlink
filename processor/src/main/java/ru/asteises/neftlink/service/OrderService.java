@@ -48,6 +48,7 @@ public class OrderService {
      * Находим объект Order по ID, меняем цену и время обновления
      */
     //TODO Методы AuthService для получения текущего пользователя
+    //TODO Как проверить текущего пользователя principal.getName()
     public ResponseEntity<String> put(Principal principal,
                                       UUID orderId,
                                       Long price,
@@ -55,7 +56,7 @@ public class OrderService {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            if (order.getUser().getId().equals(userId) && principal.getName().equals(order.getUser().getName())) {
+            if (order.getUser().getId().equals(userId) && principal.getName().equals(order.getUser().getFirstname())) {
                 order.setCost(price);
                 order.setUpdateDate(LocalDateTime.now());
                 orderRepository.save(order);
@@ -127,7 +128,5 @@ public class OrderService {
         pageResponse.setPageInfo(new PageInfo(elements, shift, ordersCount, orders.size()));
         return ResponseEntity.ok(pageResponse);
     }
-
-    //TODO Как создавать кастомные методы в репозитории, когда сущность состоит из нескольких других сущностей
 
 }

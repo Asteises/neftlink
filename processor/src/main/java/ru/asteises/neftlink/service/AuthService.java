@@ -27,8 +27,7 @@ public class AuthService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
 
     public JwtResponse login(@NonNull JwtRequest authRequest) throws AuthException {
-        final User user = userService.getByEmail(authRequest.getLogin())
-                .orElseThrow(() -> new AuthException("Пользователь не найден"));
+        final User user = userService.getUserByEmail(authRequest.getLogin());
         if (encoder.matches(authRequest.getPassword(), user.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(user);
             final String refreshToken = jwtProvider.generateRefreshToken(user);
@@ -45,8 +44,7 @@ public class AuthService {
             final String email = claims.getSubject();
             final String saveRefreshToken = refreshStorage.get(email);
             if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                final User user = userService.getByEmail(email)
-                        .orElseThrow(() -> new AuthException("Пользователь не найден"));
+                final User user = userService.getUserByEmail(email);
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 return new JwtResponse(accessToken, null, user.getId());
             }
@@ -60,8 +58,7 @@ public class AuthService {
             final String login = claims.getSubject();
             final String saveRefreshToken = refreshStorage.get(login);
             if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                final User user = userService.getByEmail(login)
-                        .orElseThrow(() -> new AuthException("Пользователь не найден"));
+                final User user = userService.getUserByEmail(login);
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 final String newRefreshToken = jwtProvider.generateRefreshToken(user);
                 refreshStorage.put(user.getEmail(), newRefreshToken);
