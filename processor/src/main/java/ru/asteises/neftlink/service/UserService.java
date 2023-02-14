@@ -67,14 +67,17 @@ public class UserService {
     }
 
     public User getUserByInn(int inn) {
-        return userRepository.findUserByInn(inn).orElseThrow(() -> new UserNotFound(String.format("User by inn= %s not found", inn)));
+        return userRepository.findUserByInn(inn)
+                .orElseThrow(() -> new UserNotFound(String.format("User by inn= %s not found", inn)));
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFound(String.format("User by email= %s not found", email)));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFound(String.format("User by email= %s not found", email)));
     }
 
     public User getUserByPhone(String phone) {
-        return userRepository.findByPhone(phone).orElseThrow(() -> new UserNotFound(String.format("User by phone= %s not found", phone)));
+        return userRepository.findByPhone(phone)
+                .orElseThrow(() -> new UserNotFound(String.format("User by phone= %s not found", phone)));
     }
 }

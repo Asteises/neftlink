@@ -29,7 +29,7 @@ public abstract class OrderMapper {
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "createDate", expression = "java(LocalDateTime.now())")
     @Mapping(target = "updateDate", expression = "java(LocalDateTime.now())")
-    @Mapping(target = "user", expression = "java(userService.getByEmail(jwtAuthentication.getUsername()).get())")
+//    @Mapping(target = "user", expression = "java(userService.getByEmail(jwtAuthentication.getName()).get())")
     @Mapping(target = "gas", expression = "java(gasService.getGasByName(orderDto.getGasType()))")
     @Mapping(target = "base", expression = "java(baseService.getBaseByName(orderDto.getBaseName()))")
     @Mapping(target = "visible", expression = "java(Boolean.TRUE)")

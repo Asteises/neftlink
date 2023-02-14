@@ -4,15 +4,18 @@ jdbc:
   username: sa
   password: sa
 spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
   sql:
     init:
       mode: always
       data-locations:
-  datasource:
-    initialization-mode: always
 
 qwe:
   asd: here

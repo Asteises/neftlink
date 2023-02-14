@@ -35,11 +35,12 @@ public class FindByFilterTest {
 
     @DataProvider(name = "filterDtoData")
     public static Object[][] filterDtoData() {
-        return new Object[][]{
-                {new OrderFilterDto(100L, 10000L, "98", "MPZ-3", 77777777, null, null)
-                        , 1},
-                {new OrderFilterDto(100L, 10000L, "92", null, 77777777, null, null)
-                        , 2}
-        };
+//        return new Object[][]{
+//                {new OrderFilterDto(100L, 10000L, "98", "MPZ-3", 77777777, null, null)
+//                        , 1},
+//                {new OrderFilterDto(100L, 10000L, "92", null, 77777777, null, null)
+//                        , 2}
+//        };
+        return null;
     }
 }

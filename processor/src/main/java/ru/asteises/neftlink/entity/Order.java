@@ -44,7 +44,6 @@ public class Order {
     Для того, чтобы объявить сторону, которая не несет ответственности за отношения, используется атрибут mappedBy
     в сущности Order. Он ссылается на имя свойства связи (order) на стороне владельца.
      */
-    //TODO посмотреть как делать ManyToOne
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
